@@ -150,16 +150,14 @@ public class graphDrawControl : MonoBehaviour {
 	{
 		// arg_deg: argument in degree
 
-		float ang_deg = 0.0f; // deg
 		float step = 0.5f; // deg
 		float rad, xnorm;
 		
-//		while (ang_deg < 360.0f) {
-			rad = (ang_deg + arg_deg) * Mathf.Deg2Rad;
-			xnorm = arg_deg / 180.0f - 1.0f;
+		rad = (arg_deg) * Mathf.Deg2Rad;
+		xnorm = arg_deg / 180.0f - 1.0f;
+		if (xnorm <= 1.0) {
 			addPointNormalized(my2DVec, panel, new Vector2(xnorm, Mathf.Cos(rad)));
-//			ang_deg += step;
-//		}
+		}
 		drawGraph (my2DVec, panel);
 	}
 
@@ -170,10 +168,8 @@ public class graphDrawControl : MonoBehaviour {
 		}
 		accTime = 0.0f;
 
-//		List<Vector2> my2DPointCos = new List<Vector2> ();
 		clearGraph (cosPanel);
 //		Test_drawBox (timeData, cosPanel);
-//		Test_cosineGraph (timeData, cosPanel, /* arg_deg=*/ currentArg);
 		Test_timeGraph (timeData, cosPanel, /* arg_deg=*/ currentArg);
 		currentArg += 3.0f;
 	}
