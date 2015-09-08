@@ -24,6 +24,8 @@ public class graphDrawControl : MonoBehaviour {
 
 	private float accTime = 0.0f;
 	private float currentArg = 0.0f;
+
+	private List<Vector2> timeData;
 	
 	void DrawLine(List<Vector2> my2DVec, int startPos) {
 		List<Vector3> myPoint = new List<Vector3>();
@@ -136,10 +138,29 @@ public class graphDrawControl : MonoBehaviour {
 	}
 
 	void Start () {
+		timeData = new List<Vector2>();
+
 		List<Vector2> my2DPointSin = new List<Vector2> ();
 		clearGraph (sinPanel);
 		Test_drawBox (my2DPointSin, sinPanel);
 		Test_sineGraph (my2DPointSin, sinPanel);
+	}
+
+	void Test_timeGraph(List<Vector2> my2DVec, GameObject panel, float arg_deg)
+	{
+		// arg_deg: argument in degree
+
+		float ang_deg = 0.0f; // deg
+		float step = 0.5f; // deg
+		float rad, xnorm;
+		
+//		while (ang_deg < 360.0f) {
+			rad = (ang_deg + arg_deg) * Mathf.Deg2Rad;
+			xnorm = arg_deg / 180.0f - 1.0f;
+			addPointNormalized(my2DVec, panel, new Vector2(xnorm, Mathf.Cos(rad)));
+//			ang_deg += step;
+//		}
+		drawGraph (my2DVec, panel);
 	}
 
 	void Update() {
@@ -149,10 +170,16 @@ public class graphDrawControl : MonoBehaviour {
 		}
 		accTime = 0.0f;
 
-		List<Vector2> my2DPointCos = new List<Vector2> ();
+//		List<Vector2> my2DPointCos = new List<Vector2> ();
 		clearGraph (cosPanel);
-		Test_drawBox (my2DPointCos, cosPanel);
-		Test_cosineGraph (my2DPointCos, cosPanel, /* arg_deg=*/ currentArg);
+//		Test_drawBox (timeData, cosPanel);
+//		Test_cosineGraph (timeData, cosPanel, /* arg_deg=*/ currentArg);
+		Test_timeGraph (timeData, cosPanel, /* arg_deg=*/ currentArg);
 		currentArg += 3.0f;
 	}
 }
+
+
+// TODO: static Clear()
+// TODO: static Add (x,y)
+
