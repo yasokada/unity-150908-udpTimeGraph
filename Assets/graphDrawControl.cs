@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic; // for List<>
 
 /*
+ * 
+ * above as timeGraph
+ * ------------------
+ * below as graphDraw
+ * 
  * v0.5 2015/09/07
  *   - do not draw graph for ( canvas.localScale < 0.1 ) [hide mode]
  * v0.4 2015/09/07
@@ -18,7 +23,6 @@ using System.Collections.Generic; // for List<>
 public class graphDrawControl : MonoBehaviour {
 
 	private GameObject lineGroup; // for grouping
-	public GameObject sinPanel;
 	public GameObject cosPanel;
 	public Canvas myCanvas; // to obtain canvas.scale
 
@@ -106,20 +110,6 @@ public class graphDrawControl : MonoBehaviour {
 		drawGraph (my2DVec, panel);
 	}
 
-	void Test_sineGraph(List<Vector2> my2DVec, GameObject panel)
-	{
-		float ang_deg = 0.0f; // deg
-		float step = 0.5f; // deg
-		float rad, xnorm;
-
-		while (ang_deg < 360.0f) {
-			rad = ang_deg * Mathf.Deg2Rad;
-			xnorm = ang_deg / 180.0f - 1.0f;
-			addPointNormalized(my2DVec, panel, new Vector2(xnorm, Mathf.Sin(rad)));
-			ang_deg += step;
-		}
-		drawGraph (my2DVec, panel);
-	}
 	void Test_cosineGraph(List<Vector2> my2DVec, GameObject panel, float arg_deg)
 	{
 		// arg_deg: argument in degree
@@ -139,11 +129,6 @@ public class graphDrawControl : MonoBehaviour {
 
 	void Start () {
 		timeData = new List<Vector2>();
-
-		List<Vector2> my2DPointSin = new List<Vector2> ();
-		clearGraph (sinPanel);
-		Test_drawBox (my2DPointSin, sinPanel);
-		Test_sineGraph (my2DPointSin, sinPanel);
 	}
 
 	void Test_timeGraph(List<Vector2> my2DVec, GameObject panel, float arg_deg)
