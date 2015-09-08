@@ -125,7 +125,7 @@ public class graphDrawControl : MonoBehaviour {
 		addPointNormalized (my2DVec, panel, new Vector2 (xval, yval));
 	}
 	
-	float getTimePosition_float(System.DateTime dt) 
+	static public float getTimePosition_float(System.DateTime dt) 
 	{
 		// to [0,1]
 		float totalMin = dt.Hour * 60f + dt.Minute;
@@ -135,13 +135,23 @@ public class graphDrawControl : MonoBehaviour {
 		return res * 2f - 1f;
 	}
 
-	private float xval = -1.0f;
-	static public float yval =  0.5f;
-	private System.DateTime curDt = System.DateTime.Parse("2015/09/08 00:00:00");
+	static private float xval = -1.0f; // dummy value at first
+	static private float yval =  0.5f; // dummy value at first
+	static private bool isSet = false;
+	static private float preX = -2.0f; // should have less than -1.0f at first 
 
-	static public void setYval(float yval_)
+	static public void setXYVal(System.DateTime time, float yval_)
 	{
+		float xwork = getTimePosition_float (time);
+		if (xwork < preX) {
+			return; // revert time
+		}
+		xval = xwork;
 		yval = yval_;
+		if (xval >= -1.0f) { 
+			preX = xval;
+			isSet = true;
+		}
 	}
 
 	void Update() {
@@ -154,19 +164,14 @@ public class graphDrawControl : MonoBehaviour {
 		clearGraph (timeGraphPanel);
 //		Test_drawBox (timeData, timeGraphPanel);
 
-		float xwork = getTimePosition_float (curDt);
-		// do not draw if time is reversed (e.g. 23:59:50 -> 00:00:00)
-		if (xval < xwork) {
-			xval = xwork;
+		if (isSet) {
+			isSet = false;
 			timeGraph_xy (timeData, timeGraphPanel, xval, yval);
 		}
-		drawGraph (timeData, timeGraphPanel);
 
-		curDt = curDt.AddMinutes (10f);
+		if (xval >= -1.0f) {
+			drawGraph (timeData, timeGraphPanel);
+		}
 	}
 }
-
-
-// TODO: static Clear()
-// TODO: static Add (x,y)
 
