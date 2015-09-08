@@ -135,8 +135,13 @@ public class graphDrawControl : MonoBehaviour {
 	}
 
 	private float xval = -1.0f;
-	private float yval = -1.0f;
+	private float yval =  0.5f;
 	private System.DateTime curDt = System.DateTime.Parse("2015/09/08 00:00:00");
+
+	public void setYval(float yval_)
+	{
+		yval = yval_;
+	}
 
 	void Update() {
 		accTime += Time.deltaTime;
@@ -156,7 +161,6 @@ public class graphDrawControl : MonoBehaviour {
 		drawGraph (timeData, timeGraphPanel);
 
 		curDt = curDt.AddMinutes (10f);
-		yval = xval;
 	}
 }
 
