@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic; // for List<>
 
 /*
- * 
+ * v0.2 2015/09/09
+ *   - change to timeGraph
  * above as timeGraph
  * ------------------
  * below as graphDraw
@@ -154,6 +155,7 @@ public class graphDrawControl : MonoBehaviour {
 //		Test_drawBox (timeData, timeGraphPanel);
 
 		float xwork = getTimePosition_float (curDt);
+		// do not draw if time is reversed (e.g. 23:59:50 -> 00:00:00)
 		if (xval < xwork) {
 			xval = xwork;
 			timeGraph_xy (timeData, timeGraphPanel, xval, yval);

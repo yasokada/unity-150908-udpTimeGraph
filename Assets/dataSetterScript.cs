@@ -12,7 +12,7 @@ public class dataSetterScript : MonoBehaviour {
 	
 	void Update () {
 		accTime += Time.deltaTime;
-		if (accTime < 0.3f) {
+		if (accTime < 0.3f) { // every 300msec
 			return;
 		}
 		accTime = 0.0f;
