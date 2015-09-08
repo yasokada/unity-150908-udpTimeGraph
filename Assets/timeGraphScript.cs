@@ -21,14 +21,14 @@ using System.Collections.Generic; // for List<>
  *   - draw line over Panel
  */ 
 
-public class graphDrawControl : MonoBehaviour {
+public class timeGraphScript : MonoBehaviour {
 
 	private GameObject lineGroup; // for grouping
 	public GameObject timeGraphPanel;
 	public Canvas myCanvas; // to obtain canvas.scale
-
+	
 	private float accTime = 0.0f;
-
+	
 	private List<Vector2> timeData;
 	
 	void DrawLine(List<Vector2> my2DVec, int startPos) {
@@ -48,7 +48,7 @@ public class graphDrawControl : MonoBehaviour {
 		
 		newLine.transform.parent = lineGroup.transform; // for grouping
 	}
-
+	
 	bool isHide(GameObject panel) {
 		RectTransform rect = panel.GetComponent (typeof(RectTransform)) as RectTransform;
 		Vector2 scale = rect.localScale;
@@ -57,21 +57,21 @@ public class graphDrawControl : MonoBehaviour {
 		}
 		return false;
 	}
-
+	
 	void drawGraph(List<Vector2> my2DVec, GameObject panel) {
 		if (isHide (panel)) {
 			return;
 		}
-
+		
 		lineGroup = new GameObject ("LineGroup");
-
+		
 		for (int idx=0; idx < my2DVec.Count - 1; idx++) {
 			DrawLine (my2DVec, /* startPos=*/idx);
 		}
-
+		
 		lineGroup.transform.parent = panel.transform; // to belong to panel
 	}
-
+	
 	void clearGraph(GameObject panel) {
 		foreach (Transform line in panel.transform) {
 			if (line.gameObject.name.Contains("LineGroup")) {
@@ -83,13 +83,13 @@ public class graphDrawControl : MonoBehaviour {
 	void addPointNormalized(List<Vector2> my2DVec, GameObject panel, Vector2 point)
 	{
 		// point: normalized point data [-1.0, 1.0] for each of x, y
-
+		
 		RectTransform panelRect = panel.GetComponent<RectTransform> ();
 		float width = panelRect.rect.width;
 		float height = panelRect.rect.height;
 		
 		RectTransform canvasRect = myCanvas.GetComponent<RectTransform> ();
-
+		
 		Vector2 pointPos;
 		
 		// Bottom Left
@@ -106,10 +106,10 @@ public class graphDrawControl : MonoBehaviour {
 		addPointNormalized (my2DVec, panel, new Vector2 (1.0f, 1.0f));
 		addPointNormalized (my2DVec, panel, new Vector2 (1.0f, -1.0f));
 		addPointNormalized (my2DVec, panel, new Vector2 (-1.0f, -1.0f));
-
+		
 		drawGraph (my2DVec, panel);
 	}
-
+	
 	void Start () {
 		timeData = new List<Vector2>();
 	}
@@ -130,16 +130,16 @@ public class graphDrawControl : MonoBehaviour {
 		// to [0,1]
 		float totalMin = dt.Hour * 60f + dt.Minute;
 		float res = totalMin / (60f * 24);
-
+		
 		// to [-1,1]
 		return res * 2f - 1f;
 	}
-
+	
 	static private float xval = -1.0f; // dummy value at first
 	static private float yval =  0.5f; // dummy value at first
 	static private bool isSet = false;
 	static private float preX = -2.0f; // should have less than -1.0f at first 
-
+	
 	static public void SetXYVal(System.DateTime time, float yval_)
 	{
 		float xwork = getTimePosition_float (time);
@@ -153,23 +153,22 @@ public class graphDrawControl : MonoBehaviour {
 			isSet = true;
 		}
 	}
-
+	
 	void Update() {
 		accTime += Time.deltaTime;
 		if (accTime < 0.3f) { // for every 300 msec
 			return;
 		}
 		accTime = 0.0f;
-
+		
 		clearGraph (timeGraphPanel);
-//		Test_drawBox (timeData, timeGraphPanel);
-
+		//		Test_drawBox (timeData, timeGraphPanel);
+		
 		if (isSet) {
 			isSet = false;
 			timeGraph_xy (timeData, timeGraphPanel, xval, yval);
 		}
-
+		
 		drawGraph (timeData, timeGraphPanel);
 	}
 }
-
