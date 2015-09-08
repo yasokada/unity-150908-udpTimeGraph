@@ -21,7 +21,7 @@ public class dataSetterScript : MonoBehaviour {
 
 		curDt = curDt.AddMinutes (10f);
 
-		graphDrawControl.setXYVal (curDt, yval);
+		graphDrawControl.SetXYVal (curDt, yval);
 		yval -= 0.001f;
 	}
 }

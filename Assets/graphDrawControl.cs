@@ -140,7 +140,7 @@ public class graphDrawControl : MonoBehaviour {
 	static private bool isSet = false;
 	static private float preX = -2.0f; // should have less than -1.0f at first 
 
-	static public void setXYVal(System.DateTime time, float yval_)
+	static public void SetXYVal(System.DateTime time, float yval_)
 	{
 		float xwork = getTimePosition_float (time);
 		if (xwork < preX) {
@@ -156,7 +156,7 @@ public class graphDrawControl : MonoBehaviour {
 
 	void Update() {
 		accTime += Time.deltaTime;
-		if (accTime < 0.3f) {
+		if (accTime < 0.3f) { // for every 300 msec
 			return;
 		}
 		accTime = 0.0f;
@@ -169,9 +169,7 @@ public class graphDrawControl : MonoBehaviour {
 			timeGraph_xy (timeData, timeGraphPanel, xval, yval);
 		}
 
-		if (xval >= -1.0f) {
-			drawGraph (timeData, timeGraphPanel);
-		}
+		drawGraph (timeData, timeGraphPanel);
 	}
 }
 
