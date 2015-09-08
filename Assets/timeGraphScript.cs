@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic; // for List<>
 
 /*
- * v0.2 2015/09/09
+ * v0.1 2015/09/09
  *   - change to timeGraph
  * above as timeGraph
  * ------------------
