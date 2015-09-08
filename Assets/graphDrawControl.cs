@@ -27,7 +27,6 @@ public class graphDrawControl : MonoBehaviour {
 	public Canvas myCanvas; // to obtain canvas.scale
 
 	private float accTime = 0.0f;
-	private float currentArg = 0.0f;
 
 	private List<Vector2> timeData;
 	
@@ -110,40 +109,23 @@ public class graphDrawControl : MonoBehaviour {
 		drawGraph (my2DVec, panel);
 	}
 
-	void Test_cosineGraph(List<Vector2> my2DVec, GameObject panel, float arg_deg)
-	{
-		// arg_deg: argument in degree
-
-		float ang_deg = 0.0f; // deg
-		float step = 0.5f; // deg
-		float rad, xnorm;
-		
-		while (ang_deg < 360.0f) {
-			rad = (ang_deg + arg_deg) * Mathf.Deg2Rad;
-			xnorm = ang_deg / 180.0f - 1.0f;
-			addPointNormalized(my2DVec, panel, new Vector2(xnorm, Mathf.Cos(rad)));
-			ang_deg += step;
-		}
-		drawGraph (my2DVec, panel);
-	}
-
 	void Start () {
 		timeData = new List<Vector2>();
 	}
-
-	void Test_timeGraph(List<Vector2> my2DVec, GameObject panel, float arg_deg)
+	
+	void timeGraph_xy(List<Vector2> my2DVec, GameObject panel, float xval, float yval)
 	{
-		// arg_deg: argument in degree
-
-		float step = 0.5f; // deg
-		float rad, xnorm;
-		
-		rad = (arg_deg) * Mathf.Deg2Rad;
-		xnorm = arg_deg / 180.0f - 1.0f;
-		if (xnorm <= 1.0) {
-			addPointNormalized(my2DVec, panel, new Vector2(xnorm, Mathf.Cos(rad)));
+		if (xval < -1.0f || xval > 1.0f) {
+			return;
 		}
+		if (yval < -1.0f || yval > 1.0f) {
+			return;
+		}
+		addPointNormalized (my2DVec, panel, new Vector2 (xval, yval));
 	}
+
+	private float xval = -1.0f;
+	private float yval = -1.0f;
 
 	void Update() {
 		accTime += Time.deltaTime;
@@ -155,10 +137,11 @@ public class graphDrawControl : MonoBehaviour {
 		clearGraph (timeGraphPanel);
 //		Test_drawBox (timeData, timeGraphPanel);
 
-		Test_timeGraph (timeData, timeGraphPanel, /* arg_deg=*/ currentArg);
+		timeGraph_xy (timeData, timeGraphPanel, xval, yval);
 		drawGraph (timeData, timeGraphPanel);
 
-		currentArg += 3.0f;
+		xval += 0.03f;
+		yval += 0.03f;
 	}
 }
 
