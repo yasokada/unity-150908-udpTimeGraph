@@ -135,10 +135,10 @@ public class graphDrawControl : MonoBehaviour {
 	}
 
 	private float xval = -1.0f;
-	private float yval =  0.5f;
+	static public float yval =  0.5f;
 	private System.DateTime curDt = System.DateTime.Parse("2015/09/08 00:00:00");
 
-	public void setYval(float yval_)
+	static public void setYval(float yval_)
 	{
 		yval = yval_;
 	}
