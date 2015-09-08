@@ -23,7 +23,7 @@ using System.Collections.Generic; // for List<>
 public class graphDrawControl : MonoBehaviour {
 
 	private GameObject lineGroup; // for grouping
-	public GameObject cosPanel;
+	public GameObject timeGraphPanel;
 	public Canvas myCanvas; // to obtain canvas.scale
 
 	private float accTime = 0.0f;
@@ -143,7 +143,6 @@ public class graphDrawControl : MonoBehaviour {
 		if (xnorm <= 1.0) {
 			addPointNormalized(my2DVec, panel, new Vector2(xnorm, Mathf.Cos(rad)));
 		}
-		drawGraph (my2DVec, panel);
 	}
 
 	void Update() {
@@ -153,9 +152,12 @@ public class graphDrawControl : MonoBehaviour {
 		}
 		accTime = 0.0f;
 
-		clearGraph (cosPanel);
-//		Test_drawBox (timeData, cosPanel);
-		Test_timeGraph (timeData, cosPanel, /* arg_deg=*/ currentArg);
+		clearGraph (timeGraphPanel);
+//		Test_drawBox (timeData, timeGraphPanel);
+
+		Test_timeGraph (timeData, timeGraphPanel, /* arg_deg=*/ currentArg);
+		drawGraph (timeData, timeGraphPanel);
+
 		currentArg += 3.0f;
 	}
 }
