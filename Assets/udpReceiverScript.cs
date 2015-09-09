@@ -10,7 +10,8 @@ using System.Threading;
 using NS_MyNetUtil; // for MyNetUtil.getMyIPAddress()
 
 /*
- * v0.1  
+ * v0.1 2015/09/09
+ *   - 
  * above as updReceiver
  * -----------------------
  * below as UdpEchoServer
@@ -41,25 +42,10 @@ public class udpReceiverScript : MonoBehaviour {
 	
 	public Text myipText; // to show my IP address(port)
 	public Text recvdText;
-	public InputField delayIF; // to input delay before echo back
 	public Text versionText;
 	
 	private bool stopThr = false;
-	private int delay_msec = 0;
-	
-	int getDelay() { 
-		string txt = delayIF.text;
-		if (txt.Length == 0) {
-			return 0;
-		}
-		// instead of int.Parse(), Convert.XXX() will return 0 if null
-		int res = Convert.ToInt16(delayIF.text);
-		if (res < 0) {
-			return 0;
-		}
-		return res;
-	}
-	
+
 	void Start () {
 		versionText.text = kAppName + " " + kVersion;
 		myipText.text = MyNetUtil.getMyIPAddress() + " (" + port.ToString () + ")";
@@ -79,7 +65,6 @@ public class udpReceiverScript : MonoBehaviour {
 	
 	void Update() {
 		recvdText.text = getTextMessage (lastRcvd);
-		delay_msec = getDelay ();
 	}
 	
 	void startTread() {
@@ -106,7 +91,6 @@ public class udpReceiverScript : MonoBehaviour {
 				lastRcvd = text;
 				
 				if (lastRcvd.Length > 0) {
-					Thread.Sleep(delay_msec);
 					client.Send(data, data.Length, anyIP); // echo
 				}
 			}
