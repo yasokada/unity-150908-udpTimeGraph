@@ -2,6 +2,7 @@
 
 UDP time graph
 
+- implemented on Unity 5.1.2-f1 on MacOS X 10.8.5
 - udp receive port: 6000
 - string format "12:30,0.5" 
   - where 12:30 is hour:minute
