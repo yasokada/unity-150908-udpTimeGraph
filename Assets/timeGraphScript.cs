@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic; // for List<>
 
 /*
+ * v0.2 2015/09/10
+ *   - add ymin,ymax
  * v0.1 2015/09/09
  *   - change to timeGraph
  * above as timeGraph
@@ -30,7 +32,19 @@ public class timeGraphScript : MonoBehaviour {
 	private float accTime = 0.0f;
 	
 	private List<Vector2> timeData;
-	
+
+	// TODO: do not work correctly for [-2.0f,2.0f]
+	static private float m_ymin =  -1.0f; // [-1.0f]
+	static private float m_ymax =  1.0f; // [1.0f]
+
+	float getNormalizedYValue(float val_, float min_, float max_)
+	{
+		// convert the value to [-1.0, 1.0] using [min,max]
+		float res;
+		res = (val_ - min_) * (1.0f - (-1.0f)) / (max_ - min_) + (-1.0f);
+		return res;
+	}
+
 	void DrawLine(List<Vector2> my2DVec, int startPos) {
 		List<Vector3> myPoint = new List<Vector3>();
 		for(int idx=0; idx<2; idx++) {
@@ -43,6 +57,10 @@ public class timeGraphScript : MonoBehaviour {
 		lRend.SetWidth (0.05f, 0.05f);
 		Vector3 startVec = myPoint[0];
 		Vector3 endVec   = myPoint[1];
+
+		startVec.y = getNormalizedYValue (startVec.y, m_ymin, m_ymax);
+		endVec.y = getNormalizedYValue (endVec.y, m_ymin, m_ymax);
+
 		lRend.SetPosition (0, startVec);
 		lRend.SetPosition (1, endVec);
 		
@@ -119,7 +137,7 @@ public class timeGraphScript : MonoBehaviour {
 		if (xval < -1.0f || xval > 1.0f) {
 			return;
 		}
-		if (yval < -1.0f || yval > 1.0f) {
+		if (yval < m_ymin || yval > m_ymax) {
 			return;
 		}
 		addPointNormalized (my2DVec, panel, new Vector2 (xval, yval));
@@ -132,7 +150,7 @@ public class timeGraphScript : MonoBehaviour {
 		float res = totalMin / (60f * 24);
 		
 		// to [-1,1]
-		return res * 2f - 1f;
+		return res * (m_ymax - m_ymin) + m_ymin;
 	}
 	
 	static private float xval = -1.0f; // dummy value at first
