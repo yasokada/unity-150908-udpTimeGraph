@@ -11,7 +11,7 @@ using NS_MyNetUtil; // for MyNetUtil.getMyIPAddress()
 
 /*
  * v0.1 2015/09/09
- *   - 
+ *   - send received data to timeGraph
  * above as updReceiver
  * -----------------------
  * below as UdpEchoServer
@@ -77,7 +77,14 @@ public class udpReceiverScript : MonoBehaviour {
 		stopThr = true;
 		rcvThr.Abort ();
 	}
-	
+
+	void sendToGraph(string text)
+	{
+		// udp text should be like "-0.2" in range [-1.0, 1.0]
+		float yval = float.Parse (text);
+		timeGraphScript.SetXYVal (System.DateTime.Now, yval);
+	}
+
 	private void FuncRcvData()
 	{
 		client = new UdpClient (port);
@@ -89,8 +96,9 @@ public class udpReceiverScript : MonoBehaviour {
 				byte[] data = client.Receive(ref anyIP);
 				string text = Encoding.ASCII.GetString(data);
 				lastRcvd = text;
-				
+
 				if (lastRcvd.Length > 0) {
+					sendToGraph(lastRcvd);
 					client.Send(data, data.Length, anyIP); // echo
 				}
 			}
