@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI; // for Text
 
-using System;
+using System; // for StringSplitOptions.RemoveEmptyEntries 
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
@@ -10,6 +10,8 @@ using System.Threading;
 using NS_MyNetUtil; // for MyNetUtil.getMyIPAddress()
 
 /*
+ * v0.2 2015/09/09
+ *   - change udp string from "-0.5" to "12:30,-0.5" to include hour:minutes
  * v0.1 2015/09/09
  *   - send received data to timeGraph
  * above as updReceiver
@@ -36,7 +38,7 @@ public class udpReceiverScript : MonoBehaviour {
 	public int port = 6000;
 	
 	public const string kAppName = "UDP_Receiver";
-	public const string kVersion = "v0.1";
+	public const string kVersion = "v0.2";
 	
 	public string lastRcvd;
 	
@@ -78,11 +80,32 @@ public class udpReceiverScript : MonoBehaviour {
 		rcvThr.Abort ();
 	}
 
+	string extractCsvRow(string src, int idx)
+	{
+		string[] splitted = src.Split(new string[] { System.Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
+		string res = "";
+		foreach(string each in splitted) {
+			string [] elements = each.Split(',');
+			res = res + elements[idx] + System.Environment.NewLine;
+		}
+		return res;
+	}
+
 	void sendToGraph(string text)
 	{
-		// udp text should be like "-0.2" in range [-1.0, 1.0]
-		float yval = float.Parse (text);
-		timeGraphScript.SetXYVal (System.DateTime.Now, yval);
+		// udp text should be in the form of "12:30,-0.2"
+		// where 
+		//   "12:30" is hour and minutes,
+		//   and "-0.2" should be in range [-1.0, 1.0]
+	
+		string first = extractCsvRow (text, /* idx=*/0);
+		string second = extractCsvRow (text, /* idx=*/1);
+
+		// TODO: input error check
+
+		System.DateTime dt = System.DateTime.Parse (first);
+		float yval = float.Parse (second);
+		timeGraphScript.SetXYVal (dt, yval);
 	}
 
 	private void FuncRcvData()
