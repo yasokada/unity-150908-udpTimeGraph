@@ -7,7 +7,7 @@ UDP time graph
 
 two types of UDP string can be sent
 - data string 
-  - e.g. "12:30,0.5" where 12:30 is hour:minute
+  - e.g. "12:30,0.5" where 12:30 is hour:minute and 0.5 is y value
 - command string
   - e.g. "set,yrange,-3.0,3.0" to set y range to [-3.0,3.0]
 
