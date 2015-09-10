@@ -10,6 +10,8 @@ using System.Threading;
 using NS_MyNetUtil; // for MyNetUtil.getMyIPAddress()
 
 /*
+ * v0.4 2015/09/10
+ *   - add command handling (to change y range)
  * v0.3 2015/09/09
  *   - change udp string from "-0.5" to "12:30,-0.5" to include hour:minutes
  * v0.1 2015/09/09
@@ -91,12 +93,16 @@ public class udpReceiverScript : MonoBehaviour {
 		return res;
 	}
 
+	bool isCommandString(string rcvd) {
+		return rcvd.Contains ("set");
+	}
+
 	void processRcvdString(string rcvd)
 	{
-		if (rcvd.Contains ("set") == false) { // data
+		if (isCommandString(rcvd) == false) { // data
 			sendDataToGraph(rcvd);
 		} else { // command
-
+			// TODO:
 		}
 	}
 
