@@ -12,6 +12,7 @@ using NS_MyNetUtil; // for MyNetUtil.getMyIPAddress()
 /*
  * v0.4 2015/09/10
  *   - add command handling (to change y range)
+ *   - can handle "set,yrange" command 
  * v0.3 2015/09/09
  *   - change udp string from "-0.5" to "12:30,-0.5" to include hour:minutes
  * v0.1 2015/09/09
@@ -97,12 +98,29 @@ public class udpReceiverScript : MonoBehaviour {
 		return rcvd.Contains ("set");
 	}
 
+	void processCommandString(string rcvd) 
+	{
+		// accepct only "set,yrange,[ymin],[ymax]"
+
+		string second = extractCsvRow(rcvd, /* idx=*/ 1); // e.g. yrange
+
+		if (second.Contains ("yrange") == false) {
+			return; // false
+		}
+		string third = extractCsvRow (rcvd, /* idx=*/2); // e.g. -3.0
+		string fourth = extractCsvRow (rcvd, /* idx=*/3); // e.g. 3.0
+
+		float ymin = float.Parse (third);
+		float ymax = float.Parse (fourth);
+		timeGraphScript.SetYRange (ymin, ymax);		                     
+	}
+
 	void processRcvdString(string rcvd)
 	{
 		if (isCommandString(rcvd) == false) { // data
 			sendDataToGraph(rcvd);
 		} else { // command
-			// TODO:
+			processCommandString(rcvd);
 		}
 	}
 

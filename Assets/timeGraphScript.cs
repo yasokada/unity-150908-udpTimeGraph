@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic; // for List<>
 
 /*
+ * v0.3 2015/09/10
+ *   - add SetYRange()
  * v0.2 2015/09/10
  *   - add ymin,ymax
  * v0.1 2015/09/09
@@ -169,6 +171,15 @@ public class timeGraphScript : MonoBehaviour {
 			preX = xval;
 			isSet = true;
 		}
+	}
+
+	static public void SetYRange(float ymin, float ymax) 
+	{
+		if (ymin > ymax) {
+			return; // error
+		}
+		m_ymin = ymin;
+		m_ymax = ymax;
 	}
 	
 	void Update() {
