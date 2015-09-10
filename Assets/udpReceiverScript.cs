@@ -91,7 +91,16 @@ public class udpReceiverScript : MonoBehaviour {
 		return res;
 	}
 
-	void sendToGraph(string text)
+	void processRcvdString(string rcvd)
+	{
+		if (rcvd.Contains ("set") == false) { // data
+			sendDataToGraph(rcvd);
+		} else { // command
+
+		}
+	}
+
+	void sendDataToGraph(string text)
 	{
 		// udp text should be in the form of "12:30,-0.2"
 		// where 
@@ -121,7 +130,7 @@ public class udpReceiverScript : MonoBehaviour {
 				lastRcvd = text;
 
 				if (lastRcvd.Length > 0) {
-					sendToGraph(lastRcvd);
+					processRcvdString(lastRcvd);
 					client.Send(data, data.Length, anyIP); // echo
 				}
 			}
