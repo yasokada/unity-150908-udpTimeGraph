@@ -35,8 +35,8 @@ public class timeGraphScript : MonoBehaviour {
 	
 	private List<Vector2> timeData;
 
-	static private float m_ymin =  -4.0f; // [-1.0f]
-	static private float m_ymax =  4.0f; // [1.0f]
+	static private float m_ymin =  -1.0f; // [-1.0f]
+	static private float m_ymax =  1.0f; // [1.0f]
 
 	float getNormalizedYValue(float val_, float min_, float max_)
 	{

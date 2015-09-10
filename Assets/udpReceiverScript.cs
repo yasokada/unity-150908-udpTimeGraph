@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using NS_MyNetUtil; // for MyNetUtil.getMyIPAddress()
+using NS_appInfo; // for AppInformation
 
 /*
  * v0.4 2015/09/10
@@ -40,8 +41,8 @@ public class udpReceiverScript : MonoBehaviour {
 	UdpClient client;
 	public int port = 6000;
 	
-	public const string kAppName = "UDP_Receiver";
-	public const string kVersion = "v0.2";
+	public const string kAppName = AppInfo.Name;
+	public const string kVersion = AppInfo.Version;
 	
 	public string lastRcvd;
 	
