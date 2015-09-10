@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+ * v0.4 2015/09/10
+ *   - can handle set,yrange command
+ */ 
+
 namespace NS_appInfo // NS stands for NameSpace
 {
 	public static class AppInfo
