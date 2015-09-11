@@ -7,9 +7,6 @@ using UnityEngine.UI;
  * ::Version info is managed at AppInfo.cs::
  * 
  * 
- * 2015/09/11
- *   - show m_ymin and m_ymax on the left of the timeGraph
- * 
  * ------
  * 
  * v0.3 2015/09/10
@@ -106,11 +103,12 @@ public class timeGraphScript : MonoBehaviour {
 		
 		GameObject BottomLeftGO = new GameObject ();
 		BottomLeftGO.name = "Text";
+		BottomLeftGO.tag = "graphScale";
 		BottomLeftGO.transform.parent = panel.transform;
 		BottomLeftGO.transform.position = pos;
 		BottomLeftGO.transform.localScale = new Vector3 (1f, 1f, 1f);
 		Text BottomLeftText = BottomLeftGO.AddComponent<Text> ();
-		BottomLeftText.text = val.ToString ();
+		BottomLeftText.text = val.ToString ("0.000");
 		BottomLeftText.font = Resources.GetBuiltinResource (typeof(Font), "Arial.ttf") as Font;
 		
 		RectTransform textRect = BottomLeftText.GetComponent<RectTransform> ();
