@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic; // for List<>
 using UnityEngine.UI;
 
+// my library
+using NS_MyPanelUtil;
+
+
 /*
  * ::Version info is managed at AppInfo.cs::
  * 
@@ -35,7 +39,7 @@ public class timeGraphScript : MonoBehaviour {
 
 	private GameObject lineGroup; // for grouping
 	public GameObject timeGraphPanel;
-	public Canvas myCanvas; // to obtain canvas.scale
+	private Canvas myCanvas; // to obtain canvas.scale
 	
 	private float accTime = 0.0f;
 	
@@ -129,6 +133,13 @@ public class timeGraphScript : MonoBehaviour {
 	
 	void drawGraph(List<Vector2> my2DVec, GameObject panel) {
 		if (isHide (panel)) {
+			return;
+		}
+
+		string canvasName = MyPanelUtil.getMyParentCanvasName (panel); 
+		myCanvas = GameObject.Find (canvasName).GetComponent<Canvas> ();
+		if (myCanvas == null) {
+			Debug.Log ("canvas not found");
 			return;
 		}
 
