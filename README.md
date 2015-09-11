@@ -35,4 +35,4 @@ two types of UDP string can be sent
 set,yrange,-3.0,3.0
 ```
 
-![sampleRun2](https://qiita-image-store.s3.amazonaws.com/0/32870/b8b7658c-577b-aee1-d196-1712a75c8fe3.jpeg)
+![sampleRun2](https://qiita-image-store.s3.amazonaws.com/0/32870/b2b2f681-fe7e-9285-4cae-1e925f193341.jpeg)
