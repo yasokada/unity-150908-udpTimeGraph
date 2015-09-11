@@ -77,40 +77,47 @@ public class timeGraphScript : MonoBehaviour {
 		newLine.transform.parent = lineGroup.transform; // for grouping
 	}
 
-	void drawTextOnTheLeftOfPanel(GameObject panel, float val, bool atBottom) {
-		RectTransform panelRect = panel.GetComponent<RectTransform> ();
-		float width = panelRect.rect.width;
-		float height = panelRect.rect.height;
-	
+	void calcLeftTopBottomPosition(GameObject panel, bool atBottom, out Vector3 dst) {
 		Canvas aCanvas = MyPanelUtil.getMyParentCanvasObject (panel);
 		if (aCanvas == null) {
 			Debug.Log ("canvas not found");
+			dst = new Vector3(0f, 0f, 0f);
 			return; // error
 		}
 		RectTransform canvasRect = aCanvas.GetComponent<RectTransform> ();
 		
-		// Bottom Left
-		Vector3 pos;
-		pos = panel.transform.position;
+		RectTransform panelRect = panel.GetComponent<RectTransform> ();
+		float width = panelRect.rect.width;
+		float height = panelRect.rect.height;
 		
-		pos.x -= width * 0.5f * canvasRect.localScale.x;
+		dst = panel.transform.position;
+		
+		dst.x -= width * 0.5f * canvasRect.localScale.x;
 		if (atBottom) {
-			pos.y -= height * 0.5f * canvasRect.localScale.y;
+			dst.y -= height * 0.5f * canvasRect.localScale.y;
 		} else {
-			pos.y += height * 0.5f * canvasRect.localScale.y;
+			dst.y += height * 0.5f * canvasRect.localScale.y;
 		}
+	}
+
+	void drawTextOnTheLeftOfPanel(GameObject panel, float val, bool atBottom) {	
+		Vector3 pos3;
+
+		calcLeftTopBottomPosition (panel, atBottom, out pos3);
+
+		// create game object		
+		GameObject aGameObj = new GameObject ();
+		aGameObj.name = "Text";
+		aGameObj.tag = "graphScale";
+		aGameObj.transform.parent = panel.transform;
+		aGameObj.transform.position = pos3;
+		aGameObj.transform.localScale = new Vector3 (1f, 1f, 1f);
+		Text aText = aGameObj.AddComponent<Text> ();
+		aText.text = val.ToString ("0.000");
+		aText.font = Resources.GetBuiltinResource (typeof(Font), "Arial.ttf") as Font;
 		
-		GameObject BottomLeftGO = new GameObject ();
-		BottomLeftGO.name = "Text";
-		BottomLeftGO.tag = "graphScale";
-		BottomLeftGO.transform.parent = panel.transform;
-		BottomLeftGO.transform.position = pos;
-		BottomLeftGO.transform.localScale = new Vector3 (1f, 1f, 1f);
-		Text BottomLeftText = BottomLeftGO.AddComponent<Text> ();
-		BottomLeftText.text = val.ToString ("0.000");
-		BottomLeftText.font = Resources.GetBuiltinResource (typeof(Font), "Arial.ttf") as Font;
-		
-		RectTransform textRect = BottomLeftText.GetComponent<RectTransform> ();
+		// set Text (width,height) to (100,30)
+		RectTransform textRect = aText.GetComponent<RectTransform> ();
 		textRect.sizeDelta = new Vector2 (100.0f, 30.0f);
 	}
 
