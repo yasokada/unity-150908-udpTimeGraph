@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic; // for List<>
+using UnityEngine.UI;
 
 /*
  * ::Version info is managed at AppInfo.cs::
@@ -84,12 +85,57 @@ public class timeGraphScript : MonoBehaviour {
 		}
 		return false;
 	}
+
+	void drawTextOnTheLeftOfPanel(GameObject panel, float val, bool atBottom) {
+		RectTransform panelRect = panel.GetComponent<RectTransform> ();
+		float width = panelRect.rect.width;
+		float height = panelRect.rect.height;
+		
+		RectTransform canvasRect = myCanvas.GetComponent<RectTransform> ();
+		
+		// Bottom Left
+		Vector3 pos;
+		pos = panel.transform.position;
+		
+		pos.x -= width * 0.5f * canvasRect.localScale.x;
+		if (atBottom) {
+			pos.y -= height * 0.5f * canvasRect.localScale.y;
+		} else {
+			pos.y += height * 0.5f * canvasRect.localScale.y;
+		}
+		
+		GameObject BottomLeftGO = new GameObject ();
+		BottomLeftGO.name = "Text";
+		BottomLeftGO.transform.parent = panel.transform;
+		BottomLeftGO.transform.position = pos;
+		BottomLeftGO.transform.localScale = new Vector3 (1f, 1f, 1f);
+		Text BottomLeftText = BottomLeftGO.AddComponent<Text> ();
+		BottomLeftText.text = val.ToString ();
+		BottomLeftText.font = Resources.GetBuiltinResource (typeof(Font), "Arial.ttf") as Font;
+		
+		RectTransform textRect = BottomLeftText.GetComponent<RectTransform> ();
+		textRect.sizeDelta = new Vector2 (100.0f, 30.0f);
+	}
+
+	void drawGraphScale(GameObject panel) {
+		// 1. delete graphScale 
+		GameObject [] grScales = GameObject.FindGameObjectsWithTag ("graphScale");
+		foreach (GameObject grscale in grScales) {
+			Destroy(grscale.gameObject);
+		}
+
+		// 2. draw graphScale
+		drawTextOnTheLeftOfPanel (panel, m_ymin, /* atBottm=*/true);
+		drawTextOnTheLeftOfPanel (panel, m_ymax, /* atBottm=*/false);
+	}
 	
 	void drawGraph(List<Vector2> my2DVec, GameObject panel) {
 		if (isHide (panel)) {
 			return;
 		}
-		
+
+		drawGraphScale (panel);
+
 		lineGroup = new GameObject ("LineGroup");
 		
 		for (int idx=0; idx < my2DVec.Count - 1; idx++) {
