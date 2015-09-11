@@ -76,15 +76,6 @@ public class timeGraphScript : MonoBehaviour {
 		
 		newLine.transform.parent = lineGroup.transform; // for grouping
 	}
-	
-	bool isHide(GameObject panel) {
-		RectTransform rect = panel.GetComponent (typeof(RectTransform)) as RectTransform;
-		Vector2 scale = rect.localScale;
-		if (scale.x < 0.1) {
-			return true;
-		}
-		return false;
-	}
 
 	void drawTextOnTheLeftOfPanel(GameObject panel, float val, bool atBottom) {
 		RectTransform panelRect = panel.GetComponent<RectTransform> ();
@@ -136,7 +127,7 @@ public class timeGraphScript : MonoBehaviour {
 	}
 	
 	void drawGraph(List<Vector2> my2DVec, GameObject panel) {
-		if (isHide (panel)) {
+		if (MyPanelUtil.isHide (panel)) {
 			return;
 		}
 

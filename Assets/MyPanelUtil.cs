@@ -2,9 +2,26 @@
 using System.Collections;
 using UnityEngine.UI;
 
+/*
+ * v0.1 2015/09/12
+ *   - add isHide()
+ *   - add getMyParentCanvasName()
+ */
+
 namespace NS_MyPanelUtil
 {
 	public static class MyPanelUtil {
+		// { --- isHide
+		public static bool isHide(GameObject panel) {
+			RectTransform rect = panel.GetComponent (typeof(RectTransform)) as RectTransform;
+			Vector2 scale = rect.localScale;
+			if (scale.x < 0.1) {
+				return true;
+			}
+			return false;
+		}
+		// { --- isHide
+
 		// { --- getMyParentCanvasName
 		public static string getMyParentCanvasName(GameObject panel) {
 			GameObject parentGO;
