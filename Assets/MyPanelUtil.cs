@@ -20,10 +20,10 @@ namespace NS_MyPanelUtil
 			return "";
 		}
 		public static void Test_each_getMyParentCanvasName(string name) {
-	        GameObject myPanel = GameObject.Find (name);
-	        string canvasName = getMyParentCanvasName (myPanel);
-	        Debug.Log (canvasName + " - " + myPanel.name);
-	    }
+			GameObject myPanel = GameObject.Find (name);
+			string canvasName = getMyParentCanvasName (myPanel);
+			Debug.Log (canvasName + " - " + myPanel.name);
+		}
 		public static void Test_getMyParentCanvasName() {
 			Test_each_getMyParentCanvasName ("Panel_1");
 			Test_each_getMyParentCanvasName ("Panel_1_1");
