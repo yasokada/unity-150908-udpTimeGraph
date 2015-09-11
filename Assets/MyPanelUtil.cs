@@ -33,6 +33,10 @@ namespace NS_MyPanelUtil
 			Test_each_getMyParentCanvasName ("Panel_2_1");
 			Test_each_getMyParentCanvasName ("Panel_2_2_1");
 		}
+		public static Canvas getMyParentCanvasObject(GameObject panel) {
+			string canvasName = MyPanelUtil.getMyParentCanvasName (panel); 
+			return GameObject.Find (canvasName).GetComponent<Canvas> ();
+		}
 		// } --- getMyParentCanvasName
 
 	}

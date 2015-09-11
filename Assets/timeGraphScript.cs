@@ -39,8 +39,7 @@ public class timeGraphScript : MonoBehaviour {
 
 	private GameObject lineGroup; // for grouping
 	public GameObject timeGraphPanel;
-	private Canvas myCanvas; // to obtain canvas.scale
-	
+
 	private float accTime = 0.0f;
 	
 	private List<Vector2> timeData;
@@ -91,8 +90,13 @@ public class timeGraphScript : MonoBehaviour {
 		RectTransform panelRect = panel.GetComponent<RectTransform> ();
 		float width = panelRect.rect.width;
 		float height = panelRect.rect.height;
-		
-		RectTransform canvasRect = myCanvas.GetComponent<RectTransform> ();
+	
+		Canvas aCanvas = MyPanelUtil.getMyParentCanvasObject (panel);
+		if (aCanvas == null) {
+			Debug.Log ("canvas not found");
+			return; // error
+		}
+		RectTransform canvasRect = aCanvas.GetComponent<RectTransform> ();
 		
 		// Bottom Left
 		Vector3 pos;
@@ -136,13 +140,6 @@ public class timeGraphScript : MonoBehaviour {
 			return;
 		}
 
-		string canvasName = MyPanelUtil.getMyParentCanvasName (panel); 
-		myCanvas = GameObject.Find (canvasName).GetComponent<Canvas> ();
-		if (myCanvas == null) {
-			Debug.Log ("canvas not found");
-			return;
-		}
-
 		drawGraphScale (panel);
 
 		lineGroup = new GameObject ("LineGroup");
@@ -169,8 +166,13 @@ public class timeGraphScript : MonoBehaviour {
 		RectTransform panelRect = panel.GetComponent<RectTransform> ();
 		float width = panelRect.rect.width;
 		float height = panelRect.rect.height;
-		
-		RectTransform canvasRect = myCanvas.GetComponent<RectTransform> ();
+
+		Canvas aCanvas = MyPanelUtil.getMyParentCanvasObject (panel);
+		if (aCanvas == null) {
+			Debug.Log ("canvas not found");
+			return; // error
+		}
+		RectTransform canvasRect = aCanvas.GetComponent<RectTransform> ();
 		
 		Vector2 pointPos;
 		
