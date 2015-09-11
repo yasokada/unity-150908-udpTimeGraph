@@ -77,7 +77,7 @@ public class timeGraphScript : MonoBehaviour {
 		newLine.transform.parent = lineGroup.transform; // for grouping
 	}
 
-	void calcLeftTopBottomPosition(GameObject panel, bool atBottom, out Vector3 dst) {
+	void calcCornerPosition(GameObject panel, bool atLeft, bool atBottom, out Vector3 dst) {
 		Canvas aCanvas = MyPanelUtil.getMyParentCanvasObject (panel);
 		if (aCanvas == null) {
 			Debug.Log ("canvas not found");
@@ -92,7 +92,11 @@ public class timeGraphScript : MonoBehaviour {
 		
 		dst = panel.transform.position;
 		
-		dst.x -= width * 0.5f * canvasRect.localScale.x;
+		if (atLeft) {
+			dst.x -= width * 0.5f * canvasRect.localScale.x;
+		} else {
+			dst.x += width * 0.5f * canvasRect.localScale.x;			
+		}
 		if (atBottom) {
 			dst.y -= height * 0.5f * canvasRect.localScale.y;
 		} else {
@@ -103,7 +107,7 @@ public class timeGraphScript : MonoBehaviour {
 	void drawTextOnTheLeftOfPanel(GameObject panel, float val, bool atBottom) {	
 		Vector3 pos3;
 
-		calcLeftTopBottomPosition (panel, atBottom, out pos3);
+		calcCornerPosition (panel, /* atLeft=*/true, atBottom, out pos3);
 
 		// create game object		
 		GameObject aGameObj = new GameObject ();
