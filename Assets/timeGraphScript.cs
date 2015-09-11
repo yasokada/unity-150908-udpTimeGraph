@@ -3,6 +3,14 @@ using System.Collections;
 using System.Collections.Generic; // for List<>
 
 /*
+ * ::Version info is managed at AppInfo.cs::
+ * 
+ * 
+ * 2015/09/11
+ *   - show m_ymin and m_ymax on the left of the timeGraph
+ * 
+ * ------
+ * 
  * v0.3 2015/09/10
  *   - add SetYRange()
  * v0.2 2015/09/10
