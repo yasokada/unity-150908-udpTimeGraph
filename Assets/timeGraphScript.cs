@@ -78,7 +78,7 @@ public class timeGraphScript : MonoBehaviour {
 	}
 	
 	const string kYScaleTag = "graphScale";
-	void drawYscale_panelLeft(GameObject panel, float val, bool atBottom) {	
+	void yscale_drawOnPanelLeft(GameObject panel, float val, bool atBottom) {	
 
 		// create game object		
 		GameObject aGameObj = new GameObject ();
@@ -99,7 +99,7 @@ public class timeGraphScript : MonoBehaviour {
 		textRect.sizeDelta = new Vector2 (100.0f, 30.0f);
 	}
 
-	void updateYscale(GameObject panel) {
+	void yscale_update(GameObject panel) {
 		// 1. delete graph y scale 
 		GameObject [] grScales = GameObject.FindGameObjectsWithTag (kYScaleTag);
 		foreach (GameObject grscale in grScales) {
@@ -107,8 +107,8 @@ public class timeGraphScript : MonoBehaviour {
 		}
 
 		// 2. draw graph y scale
-		drawYscale_panelLeft (panel, m_ymin, /* atBottm=*/true);
-		drawYscale_panelLeft (panel, m_ymax, /* atBottm=*/false);
+		yscale_drawOnPanelLeft (panel, m_ymin, /* atBottm=*/true);
+		yscale_drawOnPanelLeft (panel, m_ymax, /* atBottm=*/false);
 	}
 	
 	void drawGraph(List<Vector2> my2DVec, GameObject panel) {
@@ -116,7 +116,7 @@ public class timeGraphScript : MonoBehaviour {
 			return;
 		}
 
-		updateYscale (panel);
+		yscale_update (panel);
 
 		lineGroup = new GameObject ("LineGroup");
 		
