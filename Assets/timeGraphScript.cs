@@ -120,8 +120,8 @@ public class timeGraphScript : MonoBehaviour {
 		
 		// Bottom Left
 		pointPos = panel.transform.position;
-		pointPos.x += point.x * width * 0.5f * canvasRect.localScale.x;
-		pointPos.y += point.y * height * 0.5f * canvasRect.localScale.y;
+		pointPos.x += point.x * (width * 0.5f * canvasRect.localScale.x);
+		pointPos.y += point.y * (height * 0.5f * canvasRect.localScale.y);
 		my2DVec.Add (pointPos);
 	}
 		
