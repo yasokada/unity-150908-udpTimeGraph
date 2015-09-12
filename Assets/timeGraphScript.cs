@@ -150,6 +150,9 @@ public class timeGraphScript : MonoBehaviour {
 	{
 		switch (xtype_) {
 		case XType.Daily:
+			return getTimePosition_daily (dt);
+		case XType.Weekly:
+			return getTimePosition_weekly(dt);
 		default:
 			return getTimePosition_daily (dt);
 		}
@@ -163,6 +166,10 @@ public class timeGraphScript : MonoBehaviour {
 		
 		// to [-1,1]
 		return res * (1.0f - (-1.0f)) + (-1.0f);
+	}
+	static public float getTimePosition_weekly(System.DateTime dt)
+	{
+		return getTimePosition_daily(dt) / 10.0f;
 	}
 
 	static public void SetXYVal(System.DateTime time, float yval_)
