@@ -3,8 +3,7 @@ using System.Collections;
 
 public class Test_weekly : MonoBehaviour {
 
-	void Test_addWeeklyData() {
-
+	static public void Test_addWeeklyData() {
 		string [] dts = new string[]{ 
 			"2015/09/07 12:30",
 			"2015/09/08 09:30", 
@@ -21,7 +20,6 @@ public class Test_weekly : MonoBehaviour {
 
 		foreach(var dt in dts) {
 			curDt = System.DateTime.Parse(dt);
-//			yval = vals[idx];
 			yval = Random.Range(-1.0f, 1.0f);
 			timeGraphScript.SetXYVal(curDt, yval);
 			idx++;

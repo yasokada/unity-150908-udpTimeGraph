@@ -2,6 +2,8 @@
 using System.Collections;
 
 /* 
+ * v0.9 2015/09/12
+ *   - add Test related GameObjects and scripts
  * v0.8 2015/09/12
  *   - can show x scale in daily and weekly (monthly and yearly not yet)
  * v0.7 2015/09/12
