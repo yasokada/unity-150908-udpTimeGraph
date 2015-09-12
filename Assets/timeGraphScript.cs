@@ -100,13 +100,13 @@ public class timeGraphScript : MonoBehaviour {
 	}
 
 	void updateYscale(GameObject panel) {
-		// 1. delete graphScale 
+		// 1. delete graph y scale 
 		GameObject [] grScales = GameObject.FindGameObjectsWithTag (kYScaleTag);
 		foreach (GameObject grscale in grScales) {
 			Destroy(grscale.gameObject);
 		}
 
-		// 2. draw graphScale
+		// 2. draw graph y scale
 		drawYscale_panelLeft (panel, m_ymin, /* atBottm=*/true);
 		drawYscale_panelLeft (panel, m_ymax, /* atBottm=*/false);
 	}
