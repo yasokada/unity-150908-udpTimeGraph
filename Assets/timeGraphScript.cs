@@ -98,7 +98,7 @@ public class timeGraphScript : MonoBehaviour {
 		textRect.sizeDelta = new Vector2 (100.0f, 30.0f);
 	}
 
-	void drawGraphScale(GameObject panel) {
+	void updateYscale(GameObject panel) {
 		// 1. delete graphScale 
 		GameObject [] grScales = GameObject.FindGameObjectsWithTag ("graphScale");
 		foreach (GameObject grscale in grScales) {
@@ -115,7 +115,7 @@ public class timeGraphScript : MonoBehaviour {
 			return;
 		}
 
-		drawGraphScale (panel);
+		updateYscale (panel);
 
 		lineGroup = new GameObject ("LineGroup");
 		
