@@ -36,9 +36,9 @@ using NS_MyPanelUtil;
  */ 
 
 public class timeGraphScript : MonoBehaviour {
+	public GameObject timeGraphPanel;
 
 	private GameObject lineGroup; // for grouping
-	public GameObject timeGraphPanel;
 
 	private float accTime = 0.0f;
 	
@@ -77,7 +77,7 @@ public class timeGraphScript : MonoBehaviour {
 		newLine.transform.parent = lineGroup.transform; // for grouping
 	}
 	
-	void drawTextOnTheLeftOfPanel(GameObject panel, float val, bool atBottom) {	
+	void drawYscale_panelLeft(GameObject panel, float val, bool atBottom) {	
 		Vector3 pos3;
 
 		MyPanelUtil.calcCornerPosition (panel, /* atLeft=*/true, atBottom, out pos3);
@@ -106,8 +106,8 @@ public class timeGraphScript : MonoBehaviour {
 		}
 
 		// 2. draw graphScale
-		drawTextOnTheLeftOfPanel (panel, m_ymin, /* atBottm=*/true);
-		drawTextOnTheLeftOfPanel (panel, m_ymax, /* atBottm=*/false);
+		drawYscale_panelLeft (panel, m_ymin, /* atBottm=*/true);
+		drawYscale_panelLeft (panel, m_ymax, /* atBottm=*/false);
 	}
 	
 	void drawGraph(List<Vector2> my2DVec, GameObject panel) {
