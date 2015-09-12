@@ -170,6 +170,16 @@ public class timeGraphScript : MonoBehaviour {
 		m_ymax = ymax;
 	}
 
+	void updateXTypeText() {
+		GameObject gameobj = GameObject.Find ("T_xtype");
+		Text text = gameobj.GetComponent<Text> ();
+		if (text == null) {
+			return;
+		}
+
+		text.text = "daily";
+	}
+
 	void Start () {
 		graphPoints = new List<Vector2>();
 		dateTime_val_dic = new Dictionary<System.DateTime, float> ();
@@ -185,5 +195,6 @@ public class timeGraphScript : MonoBehaviour {
 		clearGraph (timeGraphPanel);
 		refreshGraphPoints (dateTime_val_dic, timeGraphPanel); 
 		drawGraph (graphPoints, timeGraphPanel);
+		updateXTypeText ();
 	}
 }
