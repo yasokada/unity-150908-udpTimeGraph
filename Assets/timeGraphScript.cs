@@ -43,6 +43,7 @@ public class timeGraphScript : MonoBehaviour {
 	private float accTime = 0.0f;
 	
 	private List<Vector2> timeData;
+	static private Dictionary<System.DateTime, float> dateTimeVals;
 
 	static private float m_ymin =  -1.0f; // [-1.0f]
 	static private float m_ymax =  1.0f; // [1.0f]
@@ -135,6 +136,26 @@ public class timeGraphScript : MonoBehaviour {
 		}
 		addPointNormalized (my2DVec, panel, new Vector2 (xval, yval));
 	}
+
+	void ToTimeData(GameObject panel) {
+		float xval, yval;
+		System.DateTime dt;
+	
+		timeData.Clear ();
+		foreach (var p in dateTimeVals) {
+			dt = p.Key;
+			xval = getTimePosition_daily(dt);
+			yval = p.Value;
+
+			if (xval < -1.0f || xval > 1.0f) {
+				continue;
+			}
+			if (yval < m_ymin || yval > m_ymax) {
+				continue;
+			}
+			addPointNormalized(timeData, panel, new Vector2(xval, yval));
+		}
+	}
 	
 	static public float getTimePosition_daily(System.DateTime dt) 
 	{
@@ -153,16 +174,18 @@ public class timeGraphScript : MonoBehaviour {
 	
 	static public void SetXYVal(System.DateTime time, float yval_)
 	{
-		float xwork = getTimePosition_daily (time);
-		if (xwork < preX) {
-			return; // revert time
-		}
-		xval = xwork;
-		yval = yval_;
-		if (xval >= -1.0f) { 
-			preX = xval;
-			isSet = true;
-		}
+		dateTimeVals.Add (time, yval_);
+
+//		float xwork = getTimePosition_daily (time);
+//		if (xwork < preX) {
+//			return; // revert time
+//		}
+//		xval = xwork;
+//		yval = yval_;
+//		if (xval >= -1.0f) { 
+//			preX = xval;
+//			isSet = true;
+//		}
 	}
 
 	static public void SetYRange(float ymin, float ymax) 
@@ -176,6 +199,7 @@ public class timeGraphScript : MonoBehaviour {
 
 	void Start () {
 		timeData = new List<Vector2>();
+		dateTimeVals = new Dictionary<System.DateTime, float> ();
 	}	
 	
 	void Update() {
@@ -189,9 +213,10 @@ public class timeGraphScript : MonoBehaviour {
 		
 		if (isSet) {
 			isSet = false;
-			timeGraph_xy (timeData, timeGraphPanel, xval, yval);
+//			timeGraph_xy (timeData, timeGraphPanel, xval, yval);
 		}
-		
+
+		ToTimeData (timeGraphPanel);
 		drawGraph (timeData, timeGraphPanel);
 	}
 }
