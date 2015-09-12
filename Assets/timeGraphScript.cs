@@ -76,47 +76,13 @@ public class timeGraphScript : MonoBehaviour {
 		
 		newLine.transform.parent = lineGroup.transform; // for grouping
 	}
-	
-	const string kYScaleTag = "graphScale";
-	void yscale_drawOnPanelLeft(GameObject panel, float val, bool atBottom) {	
-
-		// create game object		
-		GameObject aGameObj = new GameObject ();
-		aGameObj.name = "Text";
-		aGameObj.tag = kYScaleTag;
-		aGameObj.transform.parent = panel.transform;
-		aGameObj.transform.localScale = new Vector3 (1f, 1f, 1f);
-		Text aText = aGameObj.AddComponent<Text> ();
-		aText.text = val.ToString ("0.000");
-		aText.font = Resources.GetBuiltinResource (typeof(Font), "Arial.ttf") as Font;
 		
-		Vector3 pos3;
-		MyPanelUtil.calcCornerPosition (panel, /* atLeft=*/true, atBottom, out pos3);
-		aGameObj.transform.position = pos3;
-
-		// set Text (width,height) to (100,30)
-		RectTransform textRect = aText.GetComponent<RectTransform> ();
-		textRect.sizeDelta = new Vector2 (100.0f, 30.0f);
-	}
-
-	void yscale_update(GameObject panel) {
-		// 1. delete graph y scale 
-		GameObject [] grScales = GameObject.FindGameObjectsWithTag (kYScaleTag);
-		foreach (GameObject grscale in grScales) {
-			Destroy(grscale.gameObject);
-		}
-
-		// 2. draw graph y scale
-		yscale_drawOnPanelLeft (panel, m_ymin, /* atBottm=*/true);
-		yscale_drawOnPanelLeft (panel, m_ymax, /* atBottm=*/false);
-	}
-	
 	void drawGraph(List<Vector2> my2DVec, GameObject panel) {
 		if (MyPanelUtil.isHide (panel)) {
 			return;
 		}
 
-		yscale_update (panel);
+		MyPanelUtil.yscale_update (panel, m_ymin, m_ymax);
 
 		lineGroup = new GameObject ("LineGroup");
 		

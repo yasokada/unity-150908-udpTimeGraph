@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 /*
  * v0.1 2015/09/12
+ *   - add calcCornerPosition()
  *   - add isHide()
  *   - add getMyParentCanvasName()
  */
@@ -13,6 +14,43 @@ using UnityEngine.UI;
 namespace NS_MyPanelUtil
 {
 	public static class MyPanelUtil {
+		// { --- yscale_XXX 
+		const string kYScaleTag = "graphScale";
+		public static void yscale_drawOnPanelLeft(GameObject panel, float val, bool atBottom) {	
+			
+			// create game object		
+			GameObject aGameObj = new GameObject ();
+			aGameObj.name = "Text";
+			aGameObj.tag = kYScaleTag;
+			aGameObj.transform.parent = panel.transform;
+			aGameObj.transform.localScale = new Vector3 (1f, 1f, 1f);
+			Text aText = aGameObj.AddComponent<Text> ();
+			aText.text = val.ToString ("0.000");
+			aText.font = Resources.GetBuiltinResource (typeof(Font), "Arial.ttf") as Font;
+			
+			Vector3 pos3;
+			MyPanelUtil.calcCornerPosition (panel, /* atLeft=*/true, atBottom, out pos3);
+			aGameObj.transform.position = pos3;
+			
+			// set Text (width,height) to (100,30)
+			RectTransform textRect = aText.GetComponent<RectTransform> ();
+			textRect.sizeDelta = new Vector2 (100.0f, 30.0f);
+		}
+		
+		public static void yscale_update(GameObject panel, float ymin, float ymax) {
+			// 1. delete graph y scale 
+			GameObject [] grScales = GameObject.FindGameObjectsWithTag (kYScaleTag);
+			foreach (GameObject grscale in grScales) {
+				GameObject.Destroy(grscale.gameObject);
+			}
+			
+			// 2. draw graph y scale
+			yscale_drawOnPanelLeft (panel, ymin, /* atBottm=*/true);
+			yscale_drawOnPanelLeft (panel, ymax, /* atBottm=*/false);
+		}
+
+		// } --- yscale_XXX 
+
 		// { --- corner position related
 		public static void calcCornerPosition(GameObject panel, bool atLeft, bool atBottom, out Vector3 dst) {
 			Canvas aCanvas = MyPanelUtil.getMyParentCanvasObject (panel);
