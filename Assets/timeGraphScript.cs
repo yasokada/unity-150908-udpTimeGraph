@@ -42,8 +42,8 @@ public class timeGraphScript : MonoBehaviour {
 
 	private float accTime = 0.0f;
 	
-	private List<Vector2> timeDataVec2;
-	static private Dictionary<System.DateTime, float> dateTimeVals;
+	private List<Vector2> graphPoints;
+	static private Dictionary<System.DateTime, float> dateTime_val_dic;
 
 	static private float m_ymin =  -1.0f; // [-1.0f]
 	static private float m_ymax =  1.0f; // [1.0f]
@@ -130,7 +130,7 @@ public class timeGraphScript : MonoBehaviour {
 		float xval, yval;
 		System.DateTime dt;
 	
-		timeDataVec2.Clear ();
+		graphPoints.Clear ();
 		foreach (var p in dtvals) {
 			dt = p.Key;
 			xval = getTimePosition_daily(dt);
@@ -142,7 +142,7 @@ public class timeGraphScript : MonoBehaviour {
 			if (yval < m_ymin || yval > m_ymax) {
 				continue;
 			}
-			addPointNormalized(timeDataVec2, panel, new Vector2(xval, yval));
+			addPointNormalized(graphPoints, panel, new Vector2(xval, yval));
 		}
 	}
 	
@@ -158,7 +158,7 @@ public class timeGraphScript : MonoBehaviour {
 
 	static public void SetXYVal(System.DateTime time, float yval_)
 	{
-		dateTimeVals.Add (time, yval_);
+		dateTime_val_dic.Add (time, yval_);
 	}
 
 	static public void SetYRange(float ymin, float ymax) 
@@ -171,8 +171,8 @@ public class timeGraphScript : MonoBehaviour {
 	}
 
 	void Start () {
-		timeDataVec2 = new List<Vector2>();
-		dateTimeVals = new Dictionary<System.DateTime, float> ();
+		graphPoints = new List<Vector2>();
+		dateTime_val_dic = new Dictionary<System.DateTime, float> ();
 	}	
 	
 	void Update() {
@@ -183,7 +183,7 @@ public class timeGraphScript : MonoBehaviour {
 		accTime = 0.0f;
 
 		clearGraph (timeGraphPanel);
-		refreshGraphPoints (dateTimeVals, timeGraphPanel); 
-		drawGraph (timeDataVec2, timeGraphPanel);
+		refreshGraphPoints (dateTime_val_dic, timeGraphPanel); 
+		drawGraph (graphPoints, timeGraphPanel);
 	}
 }
