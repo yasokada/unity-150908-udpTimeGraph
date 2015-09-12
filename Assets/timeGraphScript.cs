@@ -61,7 +61,7 @@ public class timeGraphScript : MonoBehaviour {
 			myPoint.Add(new Vector3(my2DVec[startPos+idx].x, my2DVec[startPos+idx].y, 0.0f));
 		}
 		
-		GameObject newLine = new GameObject ("Line" + startPos.ToString() );
+		GameObject newLine = new GameObject ("line_element" + startPos.ToString() );
 		LineRenderer lRend = newLine.AddComponent<LineRenderer> ();
 		lRend.SetVertexCount(2);
 		lRend.SetWidth (0.05f, 0.05f);
