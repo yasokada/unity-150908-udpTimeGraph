@@ -157,18 +157,7 @@ public class timeGraphScript : MonoBehaviour {
 		pointPos.y += point.y * height * 0.5f * canvasRect.localScale.y;
 		my2DVec.Add (pointPos);
 	}
-	
-	void Test_drawBox(List<Vector2> my2DVec, GameObject panel)
-	{
-		addPointNormalized (my2DVec, panel, new Vector2 (-1.0f, -1.0f));
-		addPointNormalized (my2DVec, panel, new Vector2 (-1.0f, 1.0f));
-		addPointNormalized (my2DVec, panel, new Vector2 (1.0f, 1.0f));
-		addPointNormalized (my2DVec, panel, new Vector2 (1.0f, -1.0f));
-		addPointNormalized (my2DVec, panel, new Vector2 (-1.0f, -1.0f));
 		
-		drawGraph (my2DVec, panel);
-	}
-	
 	void Start () {
 		timeData = new List<Vector2>();
 	}
@@ -230,7 +219,6 @@ public class timeGraphScript : MonoBehaviour {
 		accTime = 0.0f;
 		
 		clearGraph (timeGraphPanel);
-		//		Test_drawBox (timeData, timeGraphPanel);
 		
 		if (isSet) {
 			isSet = false;
