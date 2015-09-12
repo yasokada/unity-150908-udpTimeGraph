@@ -125,10 +125,6 @@ public class timeGraphScript : MonoBehaviour {
 		my2DVec.Add (pointPos);
 	}
 		
-	void Start () {
-		timeData = new List<Vector2>();
-	}
-	
 	void timeGraph_xy(List<Vector2> my2DVec, GameObject panel, float xval, float yval)
 	{
 		if (xval < -1.0f || xval > 1.0f) {
@@ -177,6 +173,10 @@ public class timeGraphScript : MonoBehaviour {
 		m_ymin = ymin;
 		m_ymax = ymax;
 	}
+
+	void Start () {
+		timeData = new List<Vector2>();
+	}	
 	
 	void Update() {
 		accTime += Time.deltaTime;
