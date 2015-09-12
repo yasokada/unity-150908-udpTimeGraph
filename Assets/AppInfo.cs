@@ -2,6 +2,8 @@
 using System.Collections;
 
 /* 
+ * v0.8 2015/09/12
+ *   - can show x scale in daily and weekly (monthly and yearly not yet)
  * v0.7 2015/09/12
  *   - graph date is kept as <System.DateTime, float> so that x axis scale can be changed to weekly, etc.
  * v0.6 2015/09/12
@@ -16,7 +18,7 @@ namespace NS_appInfo // NS stands for NameSpace
 {
 	public static class AppInfo
 	{
-		public const string Version = "v0.7";
+		public const string Version = "v0.8";
 		public const string Name = "udpTimeGraph";
 	}
 }

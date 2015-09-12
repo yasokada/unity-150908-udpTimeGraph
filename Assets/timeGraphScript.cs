@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic; // for List<>
 using UnityEngine.UI;
+using System; // for TimeSpan
 
 // my library
 using NS_MyPanelUtil;
@@ -171,17 +172,38 @@ public class timeGraphScript : MonoBehaviour {
 		// to [-1,1]
 		return res * (1.0f - (-1.0f)) + (-1.0f);
 	}
+
+	static public System.DateTime getSundayH00M00S00(System.DateTime dt) {
+		System.DateTime res = dt;
+		res -= new TimeSpan ((int)res.DayOfWeek, res.Hour, res.Minute, res.Second);
+		return res;
+	}
+
 	static public float getTimePosition_weekly(System.DateTime dt)
 	{
-		return getTimePosition_daily(dt) / 10.0f;
+		System.DateTime sunday = getSundayH00M00S00 (dt);
+		
+		int daysdiff = dt.Subtract (sunday).Days;
+		
+		int hourMin_min = dt.Hour * 60 + dt.Minute;
+		float hourMinFraction = (float)hourMin_min / (24f * 60f); // 24 hours x 60 minutes
+		float ddhhmmFraction = (float)daysdiff + hourMinFraction;
+		
+//		Debug.Log ("target: " + dt.ToString ());
+//		Debug.Log ("sunday: " + sunday.ToString ());
+//		Debug.Log ("days: " + daysdiff);
+//		Debug.Log ("ddhhmmFraction: " + ddhhmmFraction);
+
+		float range01 = ddhhmmFraction / 7.0f; // 7 days a week
+		return range01 * 2f - 1f; // [-1.0, 1.0]
 	}
 	static public float getTimePosition_monthly(System.DateTime dt)
 	{
-		return getTimePosition_daily(dt) / 100.0f;
+		return getTimePosition_daily(dt) / 30.0f; // TODO:
 	}
 	static public float getTimePosition_yearly(System.DateTime dt)
 	{
-		return getTimePosition_daily(dt) / 1000.0f;
+		return getTimePosition_daily(dt) / 365.0f; // TODO: 
 	}
 
 	static public void SetXYVal(System.DateTime time, float yval_)
