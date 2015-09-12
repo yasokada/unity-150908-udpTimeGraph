@@ -133,7 +133,7 @@ public class timeGraphScript : MonoBehaviour {
 		graphPoints.Clear ();
 		foreach (var p in dtvals) {
 			dt = p.Key;
-			xval = getTimePosition_daily(dt);
+			xval = getTimePosition_basedOn(dt, myXtype);
 			yval = p.Value;
 
 			if (xval < -1.0f || xval > 1.0f) {
@@ -143,6 +143,15 @@ public class timeGraphScript : MonoBehaviour {
 				continue;
 			}
 			addPointNormalized(graphPoints, panel, new Vector2(xval, yval));
+		}
+	}
+
+	static public float getTimePosition_basedOn(System.DateTime dt, XType xtype_)
+	{
+		switch (xtype_) {
+		case XType.Daily:
+		default:
+			return getTimePosition_daily (dt);
 		}
 	}
 	
@@ -176,10 +185,10 @@ public class timeGraphScript : MonoBehaviour {
 		Monthly,
 		Yearly
 	};
-	static private int xtype = (int)XType.Daily;
+	static private XType myXtype = (XType)XType.Daily;
 
 	static public void SetXType(int xtype_) {
-		xtype = xtype_;
+		myXtype = (XType)xtype_;
 	}
 
 	void updateXTypeText() {
@@ -192,7 +201,7 @@ public class timeGraphScript : MonoBehaviour {
 			return;
 		}
 	
-		switch((XType)xtype) {
+		switch((XType)myXtype) {
 		case XType.Daily:
 			text.text = "daily";
 			break;
