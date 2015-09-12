@@ -77,22 +77,23 @@ public class timeGraphScript : MonoBehaviour {
 		newLine.transform.parent = lineGroup.transform; // for grouping
 	}
 	
+	const string kYScaleTag = "graphScale";
 	void drawYscale_panelLeft(GameObject panel, float val, bool atBottom) {	
-		Vector3 pos3;
-
-		MyPanelUtil.calcCornerPosition (panel, /* atLeft=*/true, atBottom, out pos3);
 
 		// create game object		
 		GameObject aGameObj = new GameObject ();
 		aGameObj.name = "Text";
-		aGameObj.tag = "graphScale";
+		aGameObj.tag = kYScaleTag;
 		aGameObj.transform.parent = panel.transform;
-		aGameObj.transform.position = pos3;
 		aGameObj.transform.localScale = new Vector3 (1f, 1f, 1f);
 		Text aText = aGameObj.AddComponent<Text> ();
 		aText.text = val.ToString ("0.000");
 		aText.font = Resources.GetBuiltinResource (typeof(Font), "Arial.ttf") as Font;
 		
+		Vector3 pos3;
+		MyPanelUtil.calcCornerPosition (panel, /* atLeft=*/true, atBottom, out pos3);
+		aGameObj.transform.position = pos3;
+
 		// set Text (width,height) to (100,30)
 		RectTransform textRect = aText.GetComponent<RectTransform> ();
 		textRect.sizeDelta = new Vector2 (100.0f, 30.0f);
@@ -100,7 +101,7 @@ public class timeGraphScript : MonoBehaviour {
 
 	void updateYscale(GameObject panel) {
 		// 1. delete graphScale 
-		GameObject [] grScales = GameObject.FindGameObjectsWithTag ("graphScale");
+		GameObject [] grScales = GameObject.FindGameObjectsWithTag (kYScaleTag);
 		foreach (GameObject grscale in grScales) {
 			Destroy(grscale.gameObject);
 		}
