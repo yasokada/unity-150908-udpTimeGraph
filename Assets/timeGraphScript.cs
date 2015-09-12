@@ -140,7 +140,7 @@ public class timeGraphScript : MonoBehaviour {
 		addPointNormalized (my2DVec, panel, new Vector2 (xval, yval));
 	}
 	
-	static public float getTimePosition_float(System.DateTime dt) 
+	static public float getTimePosition_daily(System.DateTime dt) 
 	{
 		// to [0,1]
 		float totalMin = dt.Hour * 60f + dt.Minute;
@@ -157,7 +157,7 @@ public class timeGraphScript : MonoBehaviour {
 	
 	static public void SetXYVal(System.DateTime time, float yval_)
 	{
-		float xwork = getTimePosition_float (time);
+		float xwork = getTimePosition_daily (time);
 		if (xwork < preX) {
 			return; // revert time
 		}
