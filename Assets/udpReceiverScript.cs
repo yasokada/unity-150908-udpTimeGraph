@@ -99,16 +99,42 @@ public class udpReceiverScript : MonoBehaviour {
 		return rcvd.Contains ("set");
 	}
 
+	void processCommand_xtype(string xtypeString) {
+		if (xtypeString.Contains ("daily")) {
+			timeGraphScript.SetXType ((int)timeGraphScript.XType.Daily);
+			return;
+		}
+		if (xtypeString.Contains ("weekly")) {
+			timeGraphScript.SetXType ((int)timeGraphScript.XType.Weekly);
+			return;
+		}
+		if (xtypeString.Contains ("monthly")) {
+			timeGraphScript.SetXType ((int)timeGraphScript.XType.Monthly);
+			return;
+		}
+		if (xtypeString.Contains ("yearly")) {
+			timeGraphScript.SetXType ((int)timeGraphScript.XType.Yearly);
+			return;
+		}
+	}
+
 	void processCommandString(string rcvd) 
 	{
 		// accepct only "set,yrange,[ymin],[ymax]"
 
 		string second = extractCsvRow(rcvd, /* idx=*/ 1); // e.g. yrange
+		string third;
+
+		if (second.Contains ("xtype")) {
+			third = extractCsvRow(rcvd, /* idx=*/ 2); // e.g. [d]aily, [w]eekly
+			processCommand_xtype(third);
+			return;
+		}
 
 		if (second.Contains ("yrange") == false) {
 			return; // false
 		}
-		string third = extractCsvRow (rcvd, /* idx=*/2); // e.g. -3.0
+		third = extractCsvRow (rcvd, /* idx=*/2); // e.g. -3.0
 		string fourth = extractCsvRow (rcvd, /* idx=*/3); // e.g. 3.0
 
 		float ymin = float.Parse (third);

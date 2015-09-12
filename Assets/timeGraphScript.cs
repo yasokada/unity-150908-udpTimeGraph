@@ -170,14 +170,45 @@ public class timeGraphScript : MonoBehaviour {
 		m_ymax = ymax;
 	}
 
+	public enum XType {
+		Daily,
+		Weekly,
+		Monthly,
+		Yearly
+	};
+	static private int xtype = (int)XType.Daily;
+
+	static public void SetXType(int xtype_) {
+		xtype = xtype_;
+	}
+
 	void updateXTypeText() {
 		GameObject gameobj = GameObject.Find ("T_xtype");
+		if (gameobj == null) {
+			return;
+		}
 		Text text = gameobj.GetComponent<Text> ();
 		if (text == null) {
 			return;
 		}
-
-		text.text = "daily";
+	
+		switch((XType)xtype) {
+		case XType.Daily:
+			text.text = "daily";
+			break;
+		case XType.Weekly:
+			text.text = "weekly";
+			break;
+		case XType.Monthly:
+			text.text = "monthly";
+			break;
+		case XType.Yearly:
+			text.text = "yearly";
+			break;
+		default:
+			text.text = "daily";
+			break;
+		}
 	}
 
 	void Start () {
