@@ -125,17 +125,6 @@ public class timeGraphScript : MonoBehaviour {
 		pointPos.y += point.y * (height * 0.5f * canvasRect.localScale.y);
 		my2DVec.Add (pointPos);
 	}
-		
-	void timeGraph_xy(List<Vector2> my2DVec, GameObject panel, float xval, float yval)
-	{
-		if (xval < -1.0f || xval > 1.0f) {
-			return;
-		}
-		if (yval < m_ymin || yval > m_ymax) {
-			return;
-		}
-		addPointNormalized (my2DVec, panel, new Vector2 (xval, yval));
-	}
 
 	void ToTimeData(GameObject panel) {
 		float xval, yval;
@@ -166,26 +155,10 @@ public class timeGraphScript : MonoBehaviour {
 		// to [-1,1]
 		return res * (1.0f - (-1.0f)) + (-1.0f);
 	}
-	
-	static private float xval = -1.0f; // dummy value at first
-	static private float yval =  0.5f; // dummy value at first
-	static private bool isSet = false;
-	static private float preX = -2.0f; // should have less than -1.0f at first 
-	
+
 	static public void SetXYVal(System.DateTime time, float yval_)
 	{
 		dateTimeVals.Add (time, yval_);
-
-//		float xwork = getTimePosition_daily (time);
-//		if (xwork < preX) {
-//			return; // revert time
-//		}
-//		xval = xwork;
-//		yval = yval_;
-//		if (xval >= -1.0f) { 
-//			preX = xval;
-//			isSet = true;
-//		}
 	}
 
 	static public void SetYRange(float ymin, float ymax) 
@@ -210,13 +183,8 @@ public class timeGraphScript : MonoBehaviour {
 		accTime = 0.0f;
 		
 		clearGraph (timeGraphPanel);
-		
-		if (isSet) {
-			isSet = false;
-//			timeGraph_xy (timeData, timeGraphPanel, xval, yval);
-		}
 
-		ToTimeData (timeGraphPanel);
+		ToTimeData (timeGraphPanel); // TODO: not clear what is changed 
 		drawGraph (timeData, timeGraphPanel);
 	}
 }
