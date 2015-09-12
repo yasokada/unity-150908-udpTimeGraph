@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 /*
  * v0.1 2015/09/12
+ *   - add yscale_XXX()
  *   - add calcCornerPosition()
  *   - add isHide()
  *   - add getMyParentCanvasName()
