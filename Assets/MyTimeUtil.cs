@@ -19,6 +19,14 @@ namespace NS_MyTimeUtil
 			Yearly,
 		};
 
+		public static long get_msec_now() {
+			System.DateTime now = System.DateTime.Now;
+			System.DateTime nowMsec0 = new DateTime (now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second);
+			long TotalMsec = (long)((DateTime.Now - nowMsec0).TotalMilliseconds);
+			
+			return TotalMsec;
+		}
+
 		public static System.DateTime getSundayH00M00S00(System.DateTime dt) {
 			System.DateTime res = dt;
 			res -= new TimeSpan ((int)res.DayOfWeek, res.Hour, res.Minute, res.Second);
