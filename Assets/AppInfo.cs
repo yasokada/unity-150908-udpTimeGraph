@@ -2,6 +2,8 @@
 using System.Collections;
 
 /* 
+ * v0.11 2015/09/12
+ *   - add data export feature (set,export command)
  * v0.10 2015/09/12
  *   - add monthly, yearly time scale
  *   - fix daily, weekly graph miscalculation
@@ -23,7 +25,7 @@ namespace NS_appInfo // NS stands for NameSpace
 {
 	public static class AppInfo
 	{
-		public const string Version = "v0.10";
+		public const string Version = "v0.11";
 		public const string Name = "udpTimeGraph";
 	}
 }
