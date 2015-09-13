@@ -8,9 +8,13 @@ UDP time graph
 two types of UDP string can be sent
 - data string 
   - e.g. "12:30,0.5" where 12:30 is hour:minute and 0.5 is y value
+  - e.g. "2015/09/11 12:30,0.3" for Sep.11 2015 data
 - command string
-  - e.g. "set,yrange,-3.0,3.0" to set y range to [-3.0,3.0]
-
+  - set,yrange,[min],[max] 
+    - e.g. "set,yrange,-3.0,3.0" to set y range to [-3.0,3.0]
+  - set,xtype,[type]
+    - where [type] includes { daily, weekly, monthy, yearly } 
+    - e.g. "set,xtype,weekly" to show the weekly graph
 
 ### data string example
 
