@@ -17,13 +17,23 @@ namespace NS_MyTimeUtil
 			res -= new TimeSpan ((int)res.DayOfWeek, res.Hour, res.Minute, res.Second);
 			return res;
 		}
+		public static System.DateTime getTodayH00M00S00() {
+			System.DateTime res = System.DateTime.Now;
+			res -= new TimeSpan (0, res.Hour, res.Minute, res.Second);
+			return res;
+		}
 		public static int getDaysFrom(System.DateTime fromDt, System.DateTime baseDt) {
 			return fromDt.Subtract (baseDt).Days;
 		}
+		public static double getDoubleDaysFrom(System.DateTime fromDt, System.DateTime baseDt){
+			return fromDt.Subtract (baseDt).TotalDays;
+		}		                                   
 
 	 	public static float getTimePosition_daily(System.DateTime dt) 
 		{
-			int daysFrom = getDaysFrom (dt, System.DateTime.Now);
+			System.DateTime todayH00M00S00 = getTodayH00M00S00 ();
+			int daysFrom = getDaysFrom (dt, todayH00M00S00);
+			double doubleDays = getDoubleDaysFrom (dt, todayH00M00S00);
 			if (daysFrom < 0 || daysFrom >= kDaysOfDay) {
 				return -2.0f; // error. return less than -1.0f
 			}
