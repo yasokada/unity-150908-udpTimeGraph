@@ -129,7 +129,19 @@ namespace NS_MyTimeUtil
 
 		public static float getTimePosition_monthly(System.DateTime dt)
 		{
-			return MyTimeUtil.getTimePosition_daily(dt) / 30.0f; // TODO:
+			bool isOutOfRange = false;
+			int daysFrom = getDaysWithOutOfRangeCheck (dt, (int)xscaletype.Monthly, out isOutOfRange);
+			if (isOutOfRange) {
+				return -2.0f; // error. return less than -1.0f
+			}
+
+			int hourMin_min = dt.Hour * 60 + dt.Minute;
+			float hourMinFraction = (float)hourMin_min / (24f * 60f); // 24 hours x 60 minutes
+			float ddhhmmFraction = (float)daysFrom + hourMinFraction;
+
+			var daysInMonth = getDaysInMonth (dt);
+			float range01 = ddhhmmFraction / (float)daysInMonth;
+			return range01 * 2f - 1f; // [-1.0, 1.0]
 		}
 		public static float getTimePosition_yearly(System.DateTime dt)
 		{
