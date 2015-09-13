@@ -9,6 +9,7 @@ namespace NS_MyTimeUtil
 {
 	public static class MyTimeUtil {
 
+		const int kDaysOfDay = 1;
 		const int kDaysOfWeek = 7;
 
 		public static System.DateTime getSundayH00M00S00(System.DateTime dt) {
@@ -22,6 +23,11 @@ namespace NS_MyTimeUtil
 
 	 	public static float getTimePosition_daily(System.DateTime dt) 
 		{
+			int daysFrom = getDaysFrom (dt, System.DateTime.Now);
+			if (daysFrom < 0 || daysFrom >= kDaysOfDay) {
+				return -2.0f; // error. return less than -1.0f
+			}
+
 			// to [0,1]
 			float totalMin = dt.Hour * 60f + dt.Minute;
 			float res = totalMin / (60f * 24);
