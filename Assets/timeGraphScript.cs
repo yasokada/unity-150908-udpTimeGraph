@@ -153,7 +153,7 @@ public class timeGraphScript : MonoBehaviour {
 		}
 	}
 
-	static public float getTimePosition_basedOn(System.DateTime dt, XType xtype_)
+	public static float getTimePosition_basedOn(System.DateTime dt, XType xtype_)
 	{
 		switch (xtype_) {
 		case XType.Daily:
@@ -169,12 +169,12 @@ public class timeGraphScript : MonoBehaviour {
 		}
 	}
 
-	static public void SetXYVal(System.DateTime time, float yval_)
+	public static void SetXYVal(System.DateTime time, float yval_)
 	{
 		dateTime_val_dic.Add (time, yval_);
 	}
 
-	static public void SetYRange(float ymin, float ymax) 
+	public static void SetYRange(float ymin, float ymax) 
 	{
 		if (ymin > ymax) {
 			return; // error
@@ -191,7 +191,7 @@ public class timeGraphScript : MonoBehaviour {
 	};
 	static private XType myXtype = (XType)XType.Daily;
 
-	static public void SetXType(int xtype_) {
+	public static void SetXType(int xtype_) {
 		myXtype = (XType)xtype_;
 	}
 
