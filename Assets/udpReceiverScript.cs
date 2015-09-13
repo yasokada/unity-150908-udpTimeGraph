@@ -117,7 +117,7 @@ public class udpReceiverScript : MonoBehaviour {
 			return;
 		}
 	}
-
+	
 	void processCommandString(string rcvd) 
 	{
 		// accepct only "set,yrange,[ymin],[ymax]"
@@ -168,6 +168,32 @@ public class udpReceiverScript : MonoBehaviour {
 		timeGraphScript.SetXYVal (dt, yval);
 	}
 
+	private void exportData(ref UdpClient client, ref IPEndPoint anyIP) 
+	{
+		byte[] data;
+		string text;
+
+		text = "SOT"; // start of table
+		text = text + System.Environment.NewLine;
+		data = System.Text.Encoding.ASCII.GetBytes(text);
+		client.Send(data, data.Length, anyIP);
+
+		foreach (var ptr in timeGraphScript.dateTime_val_dic) {
+			text = ptr.Key.ToString("yyyy/MM/dd hh:mm:ss");
+			text = text + ",";
+			text = text + ptr.Value.ToString();
+			text = text + System.Environment.NewLine;
+
+			data = System.Text.Encoding.ASCII.GetBytes(text);
+			client.Send(data, data.Length, anyIP);
+		}
+
+		text = "EOT"; // end of table
+		text = text + System.Environment.NewLine;
+		data = System.Text.Encoding.ASCII.GetBytes(text);
+		client.Send(data, data.Length, anyIP);
+	}
+	
 	private void FuncRcvData()
 	{
 		client = new UdpClient (port);
@@ -181,8 +207,12 @@ public class udpReceiverScript : MonoBehaviour {
 				lastRcvd = text;
 
 				if (lastRcvd.Length > 0) {
-					processRcvdString(lastRcvd);
-					client.Send(data, data.Length, anyIP); // echo
+					if (lastRcvd.Contains("set,export")) {
+						exportData(ref client, ref anyIP);
+					} else {
+						processRcvdString(lastRcvd);
+						client.Send(data, data.Length, anyIP); // echo
+					}
 				}
 			}
 			catch (Exception err)

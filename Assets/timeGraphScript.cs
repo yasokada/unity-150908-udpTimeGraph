@@ -45,7 +45,7 @@ public class timeGraphScript : MonoBehaviour {
 	private float accTime = 0.0f;
 	
 	private List<Vector2> graphPoints;
-	static private Dictionary<System.DateTime, float> dateTime_val_dic;
+	static public Dictionary<System.DateTime, float> dateTime_val_dic;
 
 	static private float m_ymin =  -1.0f; // [-1.0f]
 	static private float m_ymax =  1.0f; // [1.0f]
