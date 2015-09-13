@@ -154,7 +154,7 @@ public class timeGraphScript : MonoBehaviour {
 		case XType.Daily:
 			return getTimePosition_daily (dt);
 		case XType.Weekly:
-			return getTimePosition_weekly(dt);
+			return MyTimeUtil.getTimePosition_weekly(dt);
 		case XType.Monthly:
 			return getTimePosition_monthly(dt);
 		case XType.Yearly:
@@ -174,24 +174,6 @@ public class timeGraphScript : MonoBehaviour {
 		return res * (1.0f - (-1.0f)) + (-1.0f);
 	}
 	
-	static public float getTimePosition_weekly(System.DateTime dt)
-	{
-		System.DateTime sunday = MyTimeUtil.getSundayH00M00S00 (dt);
-		
-		int daysdiff = dt.Subtract (sunday).Days;
-		
-		int hourMin_min = dt.Hour * 60 + dt.Minute;
-		float hourMinFraction = (float)hourMin_min / (24f * 60f); // 24 hours x 60 minutes
-		float ddhhmmFraction = (float)daysdiff + hourMinFraction;
-		
-//		Debug.Log ("target: " + dt.ToString ());
-//		Debug.Log ("sunday: " + sunday.ToString ());
-//		Debug.Log ("days: " + daysdiff);
-//		Debug.Log ("ddhhmmFraction: " + ddhhmmFraction);
-
-		float range01 = ddhhmmFraction / 7.0f; // 7 days a week
-		return range01 * 2f - 1f; // [-1.0, 1.0]
-	}
 	static public float getTimePosition_monthly(System.DateTime dt)
 	{
 		return getTimePosition_daily(dt) / 30.0f; // TODO:
