@@ -35,6 +35,18 @@ namespace NS_MyTimeUtil
 //		public static double getDoubleDaysFrom(System.DateTime fromDt, System.DateTime baseDt){
 //			return fromDt.Subtract (baseDt).TotalDays;
 //		}		                                   
+		public static System.DateTime getFirstDayOfMonth(System.DateTime dt) {
+			return new DateTime (dt.Year, dt.Month, 1);
+		}
+		public static System.DateTime getLastDayOfMonth(System.DateTime dt) {
+			var firstDay = getFirstDayOfMonth (dt);
+			return firstDay.AddMonths (1).AddDays (-1);
+		}
+		public static int getDaysInMonth(System.DateTime dt) {
+			var firstDay = getFirstDayOfMonth (dt);
+			var lastDay = getLastDayOfMonth (dt);
+			return getDaysFrom (lastDay, firstDay) + 1;
+		}
 
 		static int getDays(System.DateTime dt, int xstype, out bool outOfRange) {
 			int daysFrom = 0;
@@ -55,6 +67,16 @@ namespace NS_MyTimeUtil
 				System.DateTime thisSunday = MyTimeUtil.getSundayH00M00S00 (System.DateTime.Now);
 				daysFrom = getDaysFrom (dt, thisSunday);
 				if (daysFrom >= kDaysOfWeek) {
+					outOfRange = true;
+					return daysFrom;
+				}
+			}
+
+			// Monthly
+			if (xstype == (int)xscaletype.Monthly) {
+				var firstDay = getFirstDayOfMonth(System.DateTime.Now);
+				daysFrom = getDaysFrom(dt, firstDay);
+				if (daysFrom >= getDaysInMonth(firstDay)) {
 					outOfRange = true;
 					return daysFrom;
 				}
