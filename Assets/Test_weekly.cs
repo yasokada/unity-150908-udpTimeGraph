@@ -13,7 +13,7 @@ public class Test_weekly : MonoBehaviour {
 	[Range((int)xscaletype.Daily, (int)xscaletype.Yearly)]
 	public int xtype = 0;
 
-	static public void Test_addWeeklyData() {
+	void Test_addData() {
 		string [] dts = new string[]{ 
 			"2015/09/07 12:30",
 			"2015/09/08 09:30", 
@@ -26,8 +26,6 @@ public class Test_weekly : MonoBehaviour {
 		float yval;
 		int idx = 0;
 
-		timeGraphScript.SetXType ((int)timeGraphScript.XType.Weekly);
-
 		foreach(var dt in dts) {
 			curDt = System.DateTime.Parse(dt);
 			yval = Random.Range(-1.0f, 1.0f);
@@ -36,8 +34,13 @@ public class Test_weekly : MonoBehaviour {
 		}
 	}
 
+	void Test_run() {
+		timeGraphScript.SetXType ((int)xtype);		
+		Test_addData ();
+	}
+
 	void Start () {
-		Test_addWeeklyData ();
+		Test_run ();
 	}
 	
 	void Update () {
