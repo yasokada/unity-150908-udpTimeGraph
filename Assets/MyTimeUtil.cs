@@ -48,6 +48,8 @@ namespace NS_MyTimeUtil
 			return getDaysFrom (lastDay, firstDay) + 1;
 		}
 
+		//--------------------------------------------------
+
 		static int getDaysWithOutOfRangeCheck(System.DateTime dt, int xstype, out bool outOfRange) {
 			int daysFrom = 0;
 
@@ -117,12 +119,7 @@ namespace NS_MyTimeUtil
 			int hourMin_min = dt.Hour * 60 + dt.Minute;
 			float hourMinFraction = (float)hourMin_min / (24f * 60f); // 24 hours x 60 minutes
 			float ddhhmmFraction = (float)daysFrom + hourMinFraction;
-			
-			//		Debug.Log ("target: " + dt.ToString ());
-			//		Debug.Log ("sunday: " + sunday.ToString ());
-			//		Debug.Log ("days: " + daysdiff);
-			//		Debug.Log ("ddhhmmFraction: " + ddhhmmFraction);
-			
+
 			float range01 = ddhhmmFraction / 7.0f; // 7 days a week
 			return range01 * 2f - 1f; // [-1.0, 1.0]
 		}
