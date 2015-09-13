@@ -15,6 +15,8 @@ public class Test_weekly : MonoBehaviour {
 
 	void Test_addData() {
 		string [] dts = new string[]{ 
+			"2015/07/11 09:30",
+			"2015/08/12 12:30",
 			"2015/09/07 12:30",
 			"2015/09/08 09:30", 
 			"2015/09/10 11:30", 

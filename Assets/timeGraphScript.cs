@@ -6,6 +6,7 @@ using System; // for TimeSpan
 
 // my library
 using NS_MyPanelUtil;
+using NS_MyTimeUtil;
 
 
 /*
@@ -172,16 +173,10 @@ public class timeGraphScript : MonoBehaviour {
 		// to [-1,1]
 		return res * (1.0f - (-1.0f)) + (-1.0f);
 	}
-
-	static public System.DateTime getSundayH00M00S00(System.DateTime dt) {
-		System.DateTime res = dt;
-		res -= new TimeSpan ((int)res.DayOfWeek, res.Hour, res.Minute, res.Second);
-		return res;
-	}
-
+	
 	static public float getTimePosition_weekly(System.DateTime dt)
 	{
-		System.DateTime sunday = getSundayH00M00S00 (dt);
+		System.DateTime sunday = MyTimeUtil.getSundayH00M00S00 (dt);
 		
 		int daysdiff = dt.Subtract (sunday).Days;
 		
