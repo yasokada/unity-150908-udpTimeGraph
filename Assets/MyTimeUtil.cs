@@ -48,7 +48,7 @@ namespace NS_MyTimeUtil
 			return getDaysFrom (lastDay, firstDay) + 1;
 		}
 
-		static int getDays(System.DateTime dt, int xstype, out bool outOfRange) {
+		static int getDaysWithOutOfRangeCheck(System.DateTime dt, int xstype, out bool outOfRange) {
 			int daysFrom = 0;
 
 			// Daily
@@ -93,7 +93,7 @@ namespace NS_MyTimeUtil
 	 	public static float getTimePosition_daily(System.DateTime dt) 
 		{
 			bool isOutOfRange = false;
-			int daysFrom = getDays (dt, (int)xscaletype.Daily, out isOutOfRange);
+			int daysFrom = getDaysWithOutOfRangeCheck (dt, (int)xscaletype.Daily, out isOutOfRange);
 			if (isOutOfRange) {
 				return -2.0f; // error. return less than -1.0f
 			}
@@ -109,7 +109,7 @@ namespace NS_MyTimeUtil
 		public static float getTimePosition_weekly(System.DateTime dt)
 		{
 			bool isOutOfRange = false;
-			int daysFrom = getDays (dt, (int)xscaletype.Weekly, out isOutOfRange);
+			int daysFrom = getDaysWithOutOfRangeCheck (dt, (int)xscaletype.Weekly, out isOutOfRange);
 			if (isOutOfRange) {
 				return -2.0f; // error. return less than -1.0f
 			}
