@@ -152,7 +152,7 @@ public class timeGraphScript : MonoBehaviour {
 	{
 		switch (xtype_) {
 		case XType.Daily:
-			return getTimePosition_daily (dt);
+			return MyTimeUtil.getTimePosition_daily (dt);
 		case XType.Weekly:
 			return MyTimeUtil.getTimePosition_weekly(dt);
 		case XType.Monthly:
@@ -160,27 +160,18 @@ public class timeGraphScript : MonoBehaviour {
 		case XType.Yearly:
 			return getTimePosition_yearly(dt);
 		default:
-			return getTimePosition_daily (dt);
+			return MyTimeUtil.getTimePosition_daily (dt);
 		}
 	}
 	
-	static public float getTimePosition_daily(System.DateTime dt) 
-	{
-		// to [0,1]
-		float totalMin = dt.Hour * 60f + dt.Minute;
-		float res = totalMin / (60f * 24);
-		
-		// to [-1,1]
-		return res * (1.0f - (-1.0f)) + (-1.0f);
-	}
-	
+
 	static public float getTimePosition_monthly(System.DateTime dt)
 	{
-		return getTimePosition_daily(dt) / 30.0f; // TODO:
+		return MyTimeUtil.getTimePosition_daily(dt) / 30.0f; // TODO:
 	}
 	static public float getTimePosition_yearly(System.DateTime dt)
 	{
-		return getTimePosition_daily(dt) / 365.0f; // TODO: 
+		return MyTimeUtil.getTimePosition_daily(dt) / 365.0f; // TODO: 
 	}
 
 	static public void SetXYVal(System.DateTime time, float yval_)

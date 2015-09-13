@@ -20,14 +20,22 @@ namespace NS_MyTimeUtil
 			return fromDt.Subtract (baseDt).Days;
 		}
 
+	 	public static float getTimePosition_daily(System.DateTime dt) 
+		{
+			// to [0,1]
+			float totalMin = dt.Hour * 60f + dt.Minute;
+			float res = totalMin / (60f * 24);
+			
+			// to [-1,1]
+			return res * (1.0f - (-1.0f)) + (-1.0f);
+		}
+
 		public static float getTimePosition_weekly(System.DateTime dt)
 		{
 			// find previous sunday based on Now
 			System.DateTime thisSunday = MyTimeUtil.getSundayH00M00S00 (System.DateTime.Now);
 
 			int daysFrom = getDaysFrom (dt, thisSunday);
-			Debug.Log ("daysfrom: " + daysFrom.ToString ());
-
 			if (daysFrom < 0 || daysFrom >= kDaysOfWeek) {
 				return -2.0f; // error. return less than -1.0f
 			}
