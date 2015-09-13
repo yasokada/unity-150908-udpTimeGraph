@@ -48,6 +48,12 @@ namespace NS_MyTimeUtil
 			return getDaysFrom (lastDay, firstDay) + 1;
 		}
 
+		public static int getDaysInYear(System.DateTime dt) {
+			System.DateTime firstday = new DateTime (dt.Year, 1, 1);
+			System.DateTime firstDayOfNextYear = new DateTime (dt.Year + 1, 1, 1);
+			return getDaysFrom (firstDayOfNextYear, firstday);
+		}
+
 		//--------------------------------------------------
 
 		static int getDaysWithOutOfRangeCheck(System.DateTime dt, int xstype, out bool outOfRange) {
@@ -79,6 +85,16 @@ namespace NS_MyTimeUtil
 				var firstDay = getFirstDayOfMonth(System.DateTime.Now);
 				daysFrom = getDaysFrom(dt, firstDay);
 				if (daysFrom >= getDaysInMonth(firstDay)) {
+					outOfRange = true;
+					return daysFrom;
+				}
+			}
+
+			// Yearly
+			if (xstype == (int)xscaletype.Yearly) {
+				var firstDay = new DateTime(dt.Year, 1, 1);
+				daysFrom = getDaysFrom(dt, firstDay);
+				if (daysFrom >= getDaysInYear(firstDay)) {
 					outOfRange = true;
 					return daysFrom;
 				}
@@ -142,7 +158,22 @@ namespace NS_MyTimeUtil
 		}
 		public static float getTimePosition_yearly(System.DateTime dt)
 		{
-			return MyTimeUtil.getTimePosition_daily(dt) / 365.0f; // TODO: 
+			bool isOutOfRange = false;
+			int daysFrom = getDaysWithOutOfRangeCheck (dt, (int)xscaletype.Yearly, out isOutOfRange);
+			if (isOutOfRange) {
+				return -2.0f; // error. return less than -1.0f
+			}
+
+//			Debug.Log (daysFrom.ToString () + " " + dt.ToString ());
+			
+//			int hourMin_min = dt.Hour * 60 + dt.Minute;
+//			float hourMinFraction = (float)hourMin_min / (24f * 60f); // 24 hours x 60 minutes
+//			float ddhhmmFraction = (float)daysFrom + hourMinFraction;
+			
+			var daysInYear = getDaysInYear (dt);
+			float range01 = (float)daysFrom / (float)daysInYear;
+
+			return range01 * 2f - 1f; // [-1.0, 1.0]
 		}
 
 	}
