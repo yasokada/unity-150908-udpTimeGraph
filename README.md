@@ -40,3 +40,16 @@ set,yrange,-3.0,3.0
 ```
 
 ![sampleRun2](https://qiita-image-store.s3.amazonaws.com/0/32870/b2b2f681-fe7e-9285-4cae-1e925f193341.jpeg)
+
+```
+set,xtype,weekly
+```
+
+![weekly](https://qiita-image-store.s3.amazonaws.com/0/32870/bc097299-c417-568f-0d65-d94f6e1fd6bf.jpeg)
+
+```
+set,xtype,monthly
+```
+
+![monthly](https://qiita-image-store.s3.amazonaws.com/0/32870/566a78a6-e07a-f9cc-07ea-570acceafa19.jpeg)
+
