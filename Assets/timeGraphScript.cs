@@ -71,6 +71,11 @@ public class timeGraphScript : MonoBehaviour {
 		Vector3 startVec = myPoint[0];
 		Vector3 endVec   = myPoint[1];
 
+		// for bar graph (not look good to me)
+//		endVec.x = startVec.x;
+//		endVec.y = 0.0f;
+//		lRend.SetWidth (0.3f, 0.3f);;
+
 		startVec.y = getNormalizedYValue (startVec.y, m_ymin, m_ymax);
 		endVec.y = getNormalizedYValue (endVec.y, m_ymin, m_ymax);
 
