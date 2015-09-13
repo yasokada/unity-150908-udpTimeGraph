@@ -16,24 +16,6 @@ public class Test_xscalechange : MonoBehaviour {
 	private int pretype = -1;
 
 	float accTime = 0.0f;
-
-	void Start () {
-	
-	}
-
-	void ChangeXScale() {
-		timeGraphScript.SetXType((int)xtype);
-//		switch (xtype) {
-//		case (int)xscaletype.Daily:
-//			break;
-//		case (int)xscaletype.Weekly:
-//			break;
-//		case (int)xscaletype.Monthly:
-//			break;
-//		case (int)xscaletype.Yearly:
-//			break;
-//		}
-	}
 	
 	void Update () {
 		accTime += Time.deltaTime;
@@ -44,7 +26,7 @@ public class Test_xscalechange : MonoBehaviour {
 
 		if (xtype != pretype) {
 			pretype = xtype;
-			ChangeXScale();
+			timeGraphScript.SetXType((int)xtype);
 		}
 	
 	}
