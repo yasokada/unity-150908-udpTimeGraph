@@ -3,6 +3,16 @@ using System.Collections;
 
 public class Test_weekly : MonoBehaviour {
 
+	enum xscaletype {
+		Daily = 0,
+		Weekly,
+		Monthly,
+		Yearly,
+	};
+
+	[Range((int)xscaletype.Daily, (int)xscaletype.Yearly)]
+	public int xtype = 0;
+
 	static public void Test_addWeeklyData() {
 		string [] dts = new string[]{ 
 			"2015/09/07 12:30",
