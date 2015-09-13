@@ -179,7 +179,7 @@ public class udpReceiverScript : MonoBehaviour {
 		client.Send(data, data.Length, anyIP);
 
 		foreach (var ptr in timeGraphScript.dateTime_val_dic) {
-			text = ptr.Key.ToString("yyyy/MM/dd hh:mm:ss");
+			text = ptr.Key.ToString("yyyy/MM/dd HH:mm:ss");
 			text = text + ",";
 			text = text + ptr.Value.ToString();
 			text = text + System.Environment.NewLine;
