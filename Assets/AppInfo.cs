@@ -2,6 +2,9 @@
 using System.Collections;
 
 /* 
+ * v0.10 2015/09/12
+ *   - add monthly, yearly time scale
+ *   - fix daily, weekly graph miscalculation
  * v0.9 2015/09/12
  *   - add Test related GameObjects and scripts
  * v0.8 2015/09/12
@@ -20,7 +23,7 @@ namespace NS_appInfo // NS stands for NameSpace
 {
 	public static class AppInfo
 	{
-		public const string Version = "v0.8";
+		public const string Version = "v0.10";
 		public const string Name = "udpTimeGraph";
 	}
 }
