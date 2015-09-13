@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using System.Net; // for Dns.XXX()
 using System; // for TimeSpan
+
+// TODO: isOutOfWeek() . Daily,...
+
 
 namespace NS_MyTimeUtil
 {

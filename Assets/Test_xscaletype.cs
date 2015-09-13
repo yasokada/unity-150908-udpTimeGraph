@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Test_weekly : MonoBehaviour {
+public class Test_xscaletype : MonoBehaviour {
 
 	enum xscaletype {
 		Daily = 0,
