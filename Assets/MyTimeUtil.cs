@@ -12,6 +12,13 @@ namespace NS_MyTimeUtil
 		const int kDaysOfDay = 1;
 		const int kDaysOfWeek = 7;
 
+		enum xscaletype {
+			Daily = 0,
+			Weekly,
+			Monthly,
+			Yearly,
+		};
+
 		public static System.DateTime getSundayH00M00S00(System.DateTime dt) {
 			System.DateTime res = dt;
 			res -= new TimeSpan ((int)res.DayOfWeek, res.Hour, res.Minute, res.Second);
@@ -29,11 +36,43 @@ namespace NS_MyTimeUtil
 //			return fromDt.Subtract (baseDt).TotalDays;
 //		}		                                   
 
+		static int getDays(System.DateTime dt, int xstype, out bool outOfRange) {
+			int daysFrom = 0;
+
+			// Daily
+			if (xstype == (int)xscaletype.Daily) {
+				System.DateTime todayH00M00S00 = getTodayH00M00S00 ();
+				daysFrom = getDaysFrom(dt, todayH00M00S00);
+				if (daysFrom >= 1) {
+					outOfRange = true;
+					return daysFrom;
+				}
+			}
+
+			// Weekly
+			if (xstype == (int)xscaletype.Weekly) {
+				// find previous sunday based on Now
+				System.DateTime thisSunday = MyTimeUtil.getSundayH00M00S00 (System.DateTime.Now);
+				daysFrom = getDaysFrom (dt, thisSunday);
+				if (daysFrom >= kDaysOfWeek) {
+					outOfRange = true;
+					return daysFrom;
+				}
+			}
+
+			if (daysFrom < 0) {
+				outOfRange = true;
+				return daysFrom;
+			}
+			outOfRange = false;
+			return daysFrom;
+		}
+
 	 	public static float getTimePosition_daily(System.DateTime dt) 
 		{
-			System.DateTime todayH00M00S00 = getTodayH00M00S00 ();
-			int daysFrom = getDaysFrom (dt, todayH00M00S00);
-			if (daysFrom < 0 || daysFrom >= kDaysOfDay) {
+			bool isOutOfRange = false;
+			int daysFrom = getDays (dt, (int)xscaletype.Daily, out isOutOfRange);
+			if (isOutOfRange) {
 				return -2.0f; // error. return less than -1.0f
 			}
 
@@ -47,14 +86,12 @@ namespace NS_MyTimeUtil
 
 		public static float getTimePosition_weekly(System.DateTime dt)
 		{
-			// find previous sunday based on Now
-			System.DateTime thisSunday = MyTimeUtil.getSundayH00M00S00 (System.DateTime.Now);
-
-			int daysFrom = getDaysFrom (dt, thisSunday);
-			if (daysFrom < 0 || daysFrom >= kDaysOfWeek) {
+			bool isOutOfRange = false;
+			int daysFrom = getDays (dt, (int)xscaletype.Weekly, out isOutOfRange);
+			if (isOutOfRange) {
 				return -2.0f; // error. return less than -1.0f
 			}
-			
+
 			int hourMin_min = dt.Hour * 60 + dt.Minute;
 			float hourMinFraction = (float)hourMin_min / (24f * 60f); // 24 hours x 60 minutes
 			float ddhhmmFraction = (float)daysFrom + hourMinFraction;
@@ -66,6 +103,15 @@ namespace NS_MyTimeUtil
 			
 			float range01 = ddhhmmFraction / 7.0f; // 7 days a week
 			return range01 * 2f - 1f; // [-1.0, 1.0]
+		}
+
+		public static float getTimePosition_monthly(System.DateTime dt)
+		{
+			return MyTimeUtil.getTimePosition_daily(dt) / 30.0f; // TODO:
+		}
+		public static float getTimePosition_yearly(System.DateTime dt)
+		{
+			return MyTimeUtil.getTimePosition_daily(dt) / 365.0f; // TODO: 
 		}
 
 	}
